@@ -14,6 +14,7 @@ import {vw, vh} from '../../constants/Dimension';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import CustomButton from '../../component/CustomButton';
 import {useNavigation} from '@react-navigation/native';
+import Header from '../../component/Header';
 
 const ResetPassword = () => {
   const navigation = useNavigation();
@@ -26,24 +27,17 @@ const ResetPassword = () => {
     borderRadius: vw(10),
   };
 
-  const onPressSave = () => {};
-
-  let backAction = () => {
-    BackHandler.exitApp();
-    return true;
+  const onPressSave = () => {
+    navigation.pop(2);
   };
 
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      BackHandler.addEventListener('hardwareBackPress', backAction);
-    });
-    const _unsubscribe = navigation.addListener('blur', () => {
-      BackHandler.removeEventListener('hardwareBackPress', backAction);
-    });
-  }, []);
+  const onBackPress = () => {
+    navigation.goBack();
+  };
 
   return (
     <SafeAreaView style={{flex: 1}}>
+      <Header headerText={'Reset Password'} onBackPress={onBackPress} />
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps={'never'}
         showsVerticalScrollIndicator={false}
@@ -80,11 +74,12 @@ const ResetPassword = () => {
                 keyboardType="default"
                 secureTextEntry
                 returnKeyType="done"
+                onSubmitEditing={() => inputRefs.current[2].focus()}
                 icon={constants.Images.lock}
                 iconStyle={styles.iconStyle}
               />
               <CustomTextInput
-                ref={ref => (inputRefs.current[1] = ref)}
+                ref={ref => (inputRefs.current[2] = ref)}
                 container={inputStyles}
                 placeholder={'Confirm New Password'}
                 label={'Confirm New Password'}
@@ -96,13 +91,14 @@ const ResetPassword = () => {
                 labelStyle={{color: 'white', fontWeight: '600'}}
                 isError
                 keyboardType="default"
+                onSubmitEditing={() => inputRefs.current[3].focus()}
                 secureTextEntry
                 returnKeyType="done"
                 icon={constants.Images.lock}
                 iconStyle={styles.iconStyle}
               />
               <CustomTextInput
-                ref={ref => (inputRefs.current[1] = ref)}
+                ref={ref => (inputRefs.current[3] = ref)}
                 container={inputStyles}
                 placeholder={'Code'}
                 label={'Code'}
@@ -143,7 +139,7 @@ const styles = StyleSheet.create({
   },
   innerContainner: {
     flex: 1,
-    marginTop: vh(100),
+    marginTop: vh(10),
   },
   appLogo: {
     height: vw(140),

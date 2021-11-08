@@ -28,19 +28,9 @@ const Login = () => {
 
   const onPressSave = () => {};
 
-  let backAction = () => {
-    BackHandler.exitApp();
-    return true;
+  const onForgetPassword = () => {
+    navigation.navigate(constants.Screens.forget);
   };
-
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      BackHandler.addEventListener('hardwareBackPress', backAction);
-    });
-    const _unsubscribe = navigation.addListener('blur', () => {
-      BackHandler.removeEventListener('hardwareBackPress', backAction);
-    });
-  }, []);
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -98,7 +88,9 @@ const Login = () => {
                 icon={constants.Images.lock}
                 iconStyle={styles.iconStyle}
               />
-              <Text style={styles.forgetPasword}>{'Forget Password ?'}</Text>
+              <Text onPress={onForgetPassword} style={styles.forgetPasword}>
+                {'Forget Password ?'}
+              </Text>
             </View>
             <CustomButton
               buttonText={'Sign'}
@@ -110,7 +102,7 @@ const Login = () => {
       </KeyboardAwareScrollView>
       <Text
         onPress={() => {
-          navigation.navigate('Signup');
+          navigation.navigate(constants.Screens.SignUp);
         }}
         style={{
           fontSize: vw(12),

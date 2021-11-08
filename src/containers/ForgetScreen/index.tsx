@@ -14,6 +14,7 @@ import {vw, vh} from '../../constants/Dimension';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import CustomButton from '../../component/CustomButton';
 import {useNavigation} from '@react-navigation/native';
+import Header from '../../component/Header';
 
 const Forget = () => {
   const navigation = useNavigation();
@@ -26,10 +27,16 @@ const Forget = () => {
     borderRadius: vw(10),
   };
 
-  const onPressSave = () => {};
+  const onPressSave = () => {
+    navigation.navigate(constants.Screens.ResetPassword)
+  };
 
+  const onBackPress = () => {
+    navigation.goBack();
+  };
   return (
     <SafeAreaView style={{flex: 1}}>
+      <Header headerText={'Forget Password'} onBackPress={onBackPress} />
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps={'never'}
         showsVerticalScrollIndicator={false}
@@ -68,7 +75,7 @@ const Forget = () => {
               />
             </View>
             <CustomButton
-              buttonText={'Sign'}
+              buttonText={'Submit'}
               handleAction={onPressSave}
               customStyle={styles.saveButtonContainer}
             />
@@ -105,7 +112,7 @@ const styles = StyleSheet.create({
   signin: {
     color: 'white',
     fontWeight: '800',
-    fontSize:vw(22)
+    fontSize: vw(22),
   },
   iconStyle: {
     alignSelf: 'center',

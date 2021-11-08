@@ -8,4 +8,6 @@ export default {
   mobile_icon: require('../assets/Images/mobile_icon.png'),
   arrowLeftBlack: require('../assets/Images/arrow-left(non-optimized).png'),
   otp_pencil: require('../assets/Images/otp_pencil.png'),
+  headerImage: require('../assets/Images/headerImage.jpg'),
+  back: require('../assets/Images/back.png'),
 };

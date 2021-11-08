@@ -7,6 +7,7 @@ import {
 } from './Dimension';
 import Images from './images';
 import Colors from './Colors';
+import Screens from './Screens';
 
 export default {
   Normalise,
@@ -16,4 +17,5 @@ export default {
   DesignWidth,
   Images,
   Colors,
+  Screens,
 };

@@ -19,6 +19,8 @@ import CommonFunctions from '../../Utils/CommonFunction';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import Loder from '../../component/Loader/Loader';
+import Header from '../../component/Header';
+
 const Login = () => {
   const navigation = useNavigation();
 
@@ -55,6 +57,9 @@ const Login = () => {
   };
 
   const showAlert = () => {};
+  const onBackPress = () => {
+    navigation.goBack();
+  };
 
   const onPressSave = () => {
     if (
@@ -91,7 +96,11 @@ const Login = () => {
       } else if (phoneNumberError) {
         CommonFunctions.singleButton('invalid phone number', '', () => {});
       } else if (confirmPassword !== password) {
-        CommonFunctions.singleButton('password and confirm should be same ', '', () => {});
+        CommonFunctions.singleButton(
+          'password and confirm should be same ',
+          '',
+          () => {},
+        );
       } else if (emailError) {
         CommonFunctions.singleButton(
           'Incorrect email, please retry',
@@ -168,6 +177,12 @@ const Login = () => {
     }
   };
 
+  const onSubmitTesting = () => {
+    navigation.navigate(constants.Screens.OTP, {
+      phoneNo: '9958431869',
+    });
+  };
+
   let disabled =
     phoneNumber.length == 0 ||
     userName.length == 0 ||
@@ -179,6 +194,7 @@ const Login = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.innerContainner}>
+        <Header headerText={'Sign Up'} onBackPress={onBackPress} />
         <ImageBackground
           resizeMode="stretch"
           source={constants.Images.loginBack}
@@ -196,7 +212,7 @@ const Login = () => {
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{alignItems: 'center'}}
               style={{
-                height: vh(400),
+                height: vh(350),
                 width: '80%',
                 marginHorizontal: '10%',
               }}>
@@ -314,10 +330,10 @@ const Login = () => {
             </KeyboardAwareScrollView>
           </View>
           <CustomButton
-            isDisabled={disabled}
+            isDisabled={!disabled}
             buttonText={'Sign Up'}
-            handleAction={onPressSave}
-            // handleAction={onSubmitFormHandler}
+            // handleAction={onPressSave}
+            handleAction={onSubmitTesting}
             customStyle={[
               styles.saveButtonContainer,
               {backgroundColor: disabled ? 'grey' : '#6a9589'},
@@ -339,17 +355,7 @@ const Login = () => {
           {'Already Have Account Sign In Now'}
         </Text>
       </View>
-      <View style={{position: 'absolute', top: vh(20)}}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.goBack();
-          }}>
-          <Image
-            style={{marginLeft: vw(10)}}
-            source={constants.Images.arrowLeftBlack}
-          />
-        </TouchableOpacity>
-      </View>
+
       {loder && <Loder />}
     </SafeAreaView>
   );
@@ -364,7 +370,7 @@ const styles = StyleSheet.create({
   },
   back: {
     width: '100%',
-    height: vh(750),
+    height: vh(650),
   },
   innerContainner: {
     flex: 1,
@@ -375,7 +381,6 @@ const styles = StyleSheet.create({
     height: vw(160),
     width: vw(160),
     alignSelf: 'center',
-    marginTop: vh(20),
   },
   alignLeft40: {
     marginHorizontal: vw(50),

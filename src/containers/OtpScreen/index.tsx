@@ -11,37 +11,58 @@ import constants from '../../constants';
 import {vw, vh} from '../../constants/Dimension';
 import PhoneOTP from '../../component/PhoneOTP';
 import CustomButton from '../../component/CustomButton';
+import Header from '../../component/Header';
+import {useNavigation} from '@react-navigation/native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 interface Props {
-  number: any;
+  route: any;
 }
 
-const OTPScreen = ({number = '+919958431869'}: Props) => {
+const OTPScreen = (props: Props) => {
+  const {phoneNo} = props.route.params;
+
+  const navigation = useNavigation();
   const onResendPress = () => {};
   const onSubmitPressOTP = () => {};
   const onPressSave = () => {};
+  const onBackPress = () => {
+    navigation.goBack();
+  };
+  const onchangePhone = () => {
+    navigation.goBack();
+  };
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={styles.constainer}>
-        <Image style={styles.appLogo} source={constants.Images.AppLogo} />
-        <Text style={styles.veri}>{'Verification Code'}</Text>
-        <Text style={styles.sent}>
-          {'We have sent the verification code to\n Your Mobile Number'}
-        </Text>
-        <View style={styles.alignRow}>
-          <Text style={styles.number}>{number}</Text>
-          <TouchableOpacity style={styles.greenCircle}>
-            <Image style={styles.pencil} source={constants.Images.otp_pencil} />
-          </TouchableOpacity>
+      <Header headerText={'OTP'} onBackPress={onBackPress} />
+
+      <KeyboardAwareScrollView>
+        <View style={styles.constainer}>
+          <Image style={styles.appLogo} source={constants.Images.AppLogo} />
+          <Text style={styles.veri}>{'Verification Code'}</Text>
+          <Text style={styles.sent}>
+            {'We have sent the verification code to\n Your Mobile Number'}
+          </Text>
+          <View style={styles.alignRow}>
+            <Text style={styles.number}>{`${"+91"}${phoneNo}`}</Text>
+            <TouchableOpacity
+              onPress={onchangePhone}
+              style={styles.greenCircle}>
+              <Image
+                style={styles.pencil}
+                source={constants.Images.otp_pencil}
+              />
+            </TouchableOpacity>
+          </View>
+          <PhoneOTP onResend={onResendPress} onSubmit={onSubmitPressOTP} />
+          <CustomButton
+            buttonText={'Verify'}
+            handleAction={onPressSave}
+            customStyle={styles.saveButtonContainer}
+            textStyle={styles.textStyle}
+          />
         </View>
-        <PhoneOTP onResend={onResendPress} onSubmit={onSubmitPressOTP} />
-        <CustomButton
-          buttonText={'Verify'}
-          handleAction={onPressSave}
-          customStyle={styles.saveButtonContainer}
-          textStyle={styles.textStyle}
-        />
-      </View>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };

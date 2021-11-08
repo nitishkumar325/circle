@@ -9,12 +9,13 @@ import Signup from '../../src/containers/Singup';
 import Forget from '../../src/containers/ForgetScreen';
 import ResetPassword from '../../src/containers/ResetPassword';
 import OTPScreen from '../../src/containers/OtpScreen';
+import constants from '../../src/constants'
 
 const App = () => {
   const Stack = createStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={'OTPScreen'}>
+      <Stack.Navigator initialRouteName={'Splash'}>
         <Stack.Screen
           name={'Splash'}
           component={Splash}
@@ -25,7 +26,7 @@ const App = () => {
           }}
         />
         <Stack.Screen
-          name={'Login'}
+          name={constants.Screens.Login}
           component={Login}
           options={{
             gestureEnabled: false,
@@ -34,7 +35,7 @@ const App = () => {
           }}
         />
         <Stack.Screen
-          name={'Signup'}
+          name={constants.Screens.SignUp}
           component={Signup}
           options={{
             gestureEnabled: false,
@@ -43,7 +44,7 @@ const App = () => {
           }}
         />
         <Stack.Screen
-          name={'Forget'}
+          name={constants.Screens.forget}
           component={Forget}
           options={{
             gestureEnabled: false,
@@ -52,7 +53,7 @@ const App = () => {
           }}
         />
         <Stack.Screen
-          name={'OTPScreen'}
+          name={constants.Screens.OTP}
           component={OTPScreen}
           options={{
             gestureEnabled: false,
@@ -61,7 +62,7 @@ const App = () => {
           }}
         />
         <Stack.Screen
-          name={'ResetPassword'}
+          name={constants.Screens.ResetPassword}
           component={ResetPassword}
           options={{
             gestureEnabled: false,
