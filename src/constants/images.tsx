@@ -7,4 +7,5 @@ export default {
   User: require('../assets/Images/User.png'),
   mobile_icon: require('../assets/Images/mobile_icon.png'),
   arrowLeftBlack: require('../assets/Images/arrow-left(non-optimized).png'),
+  otp_pencil: require('../assets/Images/otp_pencil.png'),
 };

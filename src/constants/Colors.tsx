@@ -144,4 +144,5 @@ export default {
   purple: 'rgb(170, 113, 243)',
   chartGrey: 'rgb(191, 201, 212)',
   chartPurple: 'rgb(134, 118, 255)',
+  appButtonColor: '#6a9589',
 };
