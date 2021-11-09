@@ -8,8 +8,10 @@ import Login from '../../src/containers/Login';
 import Signup from '../../src/containers/Singup';
 import Forget from '../../src/containers/ForgetScreen';
 import ResetPassword from '../../src/containers/ResetPassword';
+import Landing from '../../src/containers/Landing';
+
 import OTPScreen from '../../src/containers/OtpScreen';
-import constants from '../../src/constants'
+import constants from '../../src/constants';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -64,6 +66,15 @@ const App = () => {
         <Stack.Screen
           name={constants.Screens.ResetPassword}
           component={ResetPassword}
+          options={{
+            gestureEnabled: false,
+            ...TransitionPresets.SlideFromRightIOS,
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name={constants.Screens.Landing}
+          component={Landing}
           options={{
             gestureEnabled: false,
             ...TransitionPresets.SlideFromRightIOS,

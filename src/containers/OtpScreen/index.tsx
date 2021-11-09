@@ -14,6 +14,7 @@ import CustomButton from '../../component/CustomButton';
 import Header from '../../component/Header';
 import {useNavigation} from '@react-navigation/native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import Router from '../../navigator/routes';
 
 interface Props {
   route: any;
@@ -25,16 +26,28 @@ const OTPScreen = (props: Props) => {
   const navigation = useNavigation();
   const onResendPress = () => {};
   const onSubmitPressOTP = () => {};
-  const onPressSave = () => {};
+  const onPressSave = () => {
+    Router.resetNew(navigation, constants.Screens.Landing, {
+      type: 'SIGNUP',
+    });
+  };
   const onBackPress = () => {
     navigation.goBack();
   };
   const onchangePhone = () => {
     navigation.goBack();
   };
+  const renderLeftButton = () => {
+    return (
+      <TouchableOpacity onPress={onBackPress} style={styles.backButtom}>
+        <Image style={styles.iconColor} source={constants.Images.back} />
+        <Text style={styles.headerTextStyle}>{'OTP'}</Text>
+      </TouchableOpacity>
+    );
+  };
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Header headerText={'OTP'} onBackPress={onBackPress} />
+      <Header renderLeftButton={renderLeftButton} />
 
       <KeyboardAwareScrollView>
         <View style={styles.constainer}>
@@ -44,7 +57,7 @@ const OTPScreen = (props: Props) => {
             {'We have sent the verification code to\n Your Mobile Number'}
           </Text>
           <View style={styles.alignRow}>
-            <Text style={styles.number}>{`${"+91"}${phoneNo}`}</Text>
+            <Text style={styles.number}>{`${'+91'}${phoneNo}`}</Text>
             <TouchableOpacity
               onPress={onchangePhone}
               style={styles.greenCircle}>
@@ -125,6 +138,18 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: vw(14),
     fontWeight: '600',
+  },
+  backButtom: {
+    flexDirection: 'row',
+  },
+  iconColor: {
+    tintColor: 'white',
+  },
+  headerTextStyle: {
+    fontSize: vw(14),
+    color: 'white',
+    fontWeight: '700',
+    marginLeft: vw(10),
   },
 });
 

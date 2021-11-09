@@ -145,5 +145,6 @@ export default {
   chartGrey: 'rgb(191, 201, 212)',
   chartPurple: 'rgb(134, 118, 255)',
   appButtonColor: '#6a9589',
-  appthemeColor:'#fa811e'
+  appthemeColor: '#fa811e',
+  inactiveappthemeColor: '#8a9b97',
 };

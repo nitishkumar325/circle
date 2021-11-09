@@ -183,6 +183,15 @@ const Login = () => {
     });
   };
 
+const renderLeftButton = () => {
+  return (
+    <TouchableOpacity onPress={onBackPress} style={styles.backButtom}>
+      <Image style={styles.iconColor} source={constants.Images.back} />
+      <Text style={styles.headerTextStyle}>{'Sign Up'}</Text>
+    </TouchableOpacity>
+  );
+};
+
   let disabled =
     phoneNumber.length == 0 ||
     userName.length == 0 ||
@@ -194,7 +203,7 @@ const Login = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.innerContainner}>
-        <Header headerText={'Sign Up'} onBackPress={onBackPress} />
+        <Header renderLeftButton={renderLeftButton} />
         <ImageBackground
           resizeMode="stretch"
           source={constants.Images.loginBack}
@@ -405,6 +414,18 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: '#6a9589',
     paddingVertical: vh(10),
+  },
+  backButtom: {
+    flexDirection: 'row',
+  },
+  iconColor: {
+    tintColor: 'white',
+  },
+  headerTextStyle: {
+    fontSize: vw(14),
+    color: 'white',
+    fontWeight: '700',
+    marginLeft: vw(10),
   },
 });
 

@@ -10,4 +10,6 @@ export default {
   otp_pencil: require('../assets/Images/otp_pencil.png'),
   headerImage: require('../assets/Images/headerImage.jpg'),
   back: require('../assets/Images/back.png'),
+  bell_icon: require('../assets/Images/bell_icon.png'),
+  searchIcon: require('../assets/Images/ic_search_search.png'),
 };

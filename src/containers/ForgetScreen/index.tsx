@@ -7,6 +7,7 @@ import {
   Image,
   ImageBackground,
   BackHandler,
+  TouchableOpacity,
 } from 'react-native';
 import CustomTextInput from '../../component/CustomTextInput';
 import constants from '../../constants';
@@ -28,15 +29,23 @@ const Forget = () => {
   };
 
   const onPressSave = () => {
-    navigation.navigate(constants.Screens.ResetPassword)
+    navigation.navigate(constants.Screens.ResetPassword);
   };
 
   const onBackPress = () => {
     navigation.goBack();
   };
+  const renderLeftButton = () => {
+    return (
+      <TouchableOpacity onPress={onBackPress} style={styles.backButtom}>
+        <Image style={styles.iconColor} source={constants.Images.back} />
+        <Text style={styles.headerTextStyle}>{'Forget Password'}</Text>
+      </TouchableOpacity>
+    );
+  };
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Header headerText={'Forget Password'} onBackPress={onBackPress} />
+      <Header renderLeftButton={renderLeftButton} />
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps={'never'}
         showsVerticalScrollIndicator={false}
@@ -129,6 +138,18 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: '#6a9589',
     paddingVertical: vh(10),
+  },
+  backButtom: {
+    flexDirection: 'row',
+  },
+  iconColor: {
+    tintColor: 'white',
+  },
+  headerTextStyle: {
+    fontSize: vw(14),
+    color: 'white',
+    fontWeight: '700',
+    marginLeft: vw(10),
   },
 });
 

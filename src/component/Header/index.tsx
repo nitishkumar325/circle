@@ -9,20 +9,23 @@ import {
 } from 'react-native';
 import constants from '../../constants';
 import {vw, vh} from '../../constants/Dimension';
+const noop = () => {};
 
 interface Props {
-  headerText: any;
-  onBackPress: Function;
+  renderRightButton?(): JSX.Element;
+  renderLeftButton?(): JSX.Element;
+  contentContainerStyle?: ViewStyle;
 }
 
-const Header = ({headerText = 'OTP', onBackPress = () => {}}: Props) => {
+const Header = ({
+  renderRightButton = noop,
+  renderLeftButton = noop,
+  contentContainerStyle = {},
+}: Props) => {
   return (
-    <View style={styles.header}>
-      <TouchableOpacity onPress={onBackPress}>
-        <Image style={styles.iconColor} source={constants.Images.back} />
-      </TouchableOpacity>
-
-      <Text style={styles.headerTextStyle}>{headerText}</Text>
+    <View style={[styles.container, contentContainerStyle, styles.header]}>
+      {renderLeftButton()}
+      {renderRightButton()}
     </View>
   );
 };
@@ -43,6 +46,13 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '700',
     marginLeft: vw(10),
+  },
+  container: {
+    height: constants.Normalise(60),
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: constants.vw(16),
+    justifyContent: 'space-between',
   },
 });
 

@@ -4,4 +4,8 @@ export default {
   forget: 'Forget',
   OTP: 'OTP',
   ResetPassword: 'ResetPassword',
+  Landing: 'Landing',
+  Home: 'Home',
+  Circle: 'Circle',
+  Account: 'Account',
 };
