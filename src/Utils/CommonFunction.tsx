@@ -1,4 +1,5 @@
 import {Alert} from 'react-native';
+import Snackbar from 'react-native-snackbar';
 
 const nameRegex = /^[a-zA-Z0-9 ]{3,50}$/;
 const phoneRegex = /^\d{10}$/;
@@ -37,6 +38,15 @@ const validateName = (name: string) => {
         status: false,
         msg: 'name_validation_error',
       };
+};
+
+const showSnackbar = (title: string, color: any) => {
+  Snackbar.show({
+    text: title,
+    duration: 2000,
+    textColor: 'white',
+    backgroundColor: color,
+  });
 };
 
 const normalizeEmail = (email: string) =>
@@ -134,4 +144,5 @@ export default {
   normalizeEmail,
   validateEmail,
   validatePassword,
+  showSnackbar,
 };

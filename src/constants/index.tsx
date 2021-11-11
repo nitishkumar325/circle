@@ -8,7 +8,7 @@ import {
 import Images from './images';
 import Colors from './Colors';
 import Screens from './Screens';
-
+import common from './Common';
 export default {
   Normalise,
   vh,
@@ -17,5 +17,6 @@ export default {
   DesignWidth,
   Images,
   Colors,
+  common,
   Screens,
 };

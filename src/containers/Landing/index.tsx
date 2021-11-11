@@ -25,10 +25,10 @@ function UserBottomStack() {
           let iconName;
           switch (route.name) {
             case constants.Screens.Home:
-              iconName = constants.Images.User;
+              iconName = constants.Images.Home;
               break;
             case constants.Screens.Circle:
-              iconName = constants.Images.User;
+              iconName = constants.Images.circle;
               break;
             case constants.Screens.Account:
               iconName = constants.Images.User;

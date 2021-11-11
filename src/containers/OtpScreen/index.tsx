@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import constants from '../../constants';
+import {useDispatch, useSelector} from 'react-redux';
 import {vw, vh} from '../../constants/Dimension';
 import PhoneOTP from '../../component/PhoneOTP';
 import CustomButton from '../../component/CustomButton';
@@ -16,20 +17,35 @@ import {useNavigation} from '@react-navigation/native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Router from '../../navigator/routes';
 
+import {OTPConfirm} from '../../modules/Auth';
+
 interface Props {
   route: any;
 }
 
 const OTPScreen = (props: Props) => {
+  const dispatch = useDispatch();
+
   const {phoneNo} = props.route.params;
 
   const navigation = useNavigation();
   const onResendPress = () => {};
   const onSubmitPressOTP = () => {};
   const onPressSave = () => {
-    Router.resetNew(navigation, constants.Screens.Landing, {
-      type: 'SIGNUP',
-    });
+    dispatch(
+      OTPConfirm(
+        {},
+        () => {
+          console.log('success callbacl');
+        },
+        () => {
+          console.log('error callback');
+        },
+      ),
+    );
+    // Router.resetNew(navigation, constants.Screens.Landing, {
+    //   type: 'SIGNUP',
+    // });
   };
   const onBackPress = () => {
     navigation.goBack();

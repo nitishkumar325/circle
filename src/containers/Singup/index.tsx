@@ -130,12 +130,12 @@ const Login = () => {
       .then(response => {
         setLoder(false);
         console.log('response', response);
-        if (response.data.statusCode === 200) {
-          CommonFunctions.singleButton(response.data.body, 'OK', () => {
-            navigation.goBack();
+        if (response.data.status === 200) {
+          navigation.navigate(constants.Screens.OTP, {
+            phoneNo: '9958431869',
           });
         } else {
-          CommonFunctions.singleButton(response.data.body, 'OK', () => {});
+          CommonFunctions.singleButton(response.data.message, 'OK', () => {});
         }
       })
       .catch((error: any) => {
@@ -339,10 +339,10 @@ const renderLeftButton = () => {
             </KeyboardAwareScrollView>
           </View>
           <CustomButton
-            isDisabled={!disabled}
+            isDisabled={disabled}
             buttonText={'Sign Up'}
-            // handleAction={onPressSave}
-            handleAction={onSubmitTesting}
+            handleAction={onPressSave}
+            // handleAction={onSubmitTesting}
             customStyle={[
               styles.saveButtonContainer,
               {backgroundColor: disabled ? 'grey' : '#6a9589'},
