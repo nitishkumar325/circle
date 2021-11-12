@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: vw(30),
     flexDirection: 'row',
     paddingLeft: vw(20),
-    paddingVertical: vh(25),
+    paddingVertical: vh(10),
   },
   iconColor: {
     tintColor: 'white',

@@ -73,7 +73,7 @@ const Login = () => {
         <View style={styles.seperator} />
         <Text style={styles.text}>{ErrorMsg}</Text>
         <CustomButton
-          buttonText={'Sign'}
+          buttonText={'OK'}
           textStyle={{fontSize: vw(12)}}
           handleAction={() => {
             setIsErrorModel(false);
@@ -102,6 +102,7 @@ const Login = () => {
         email: email,
       };
       // onSubmitFormHandler();
+      DemoMove();
       console.log('====data', data);
     } else {
       setError(true);
@@ -146,6 +147,11 @@ const Login = () => {
         // CommonFunctions.singleButton(confirmPasswordError, '', () => {});
       }
     }
+  };
+  const DemoMove = () => {
+    navigation.navigate(constants.Screens.OTP, {
+      phoneNo: 9999999999,
+    });
   };
   const onSubmitFormHandler = () => {
     setLoder(true);
@@ -212,7 +218,7 @@ const Login = () => {
 
   const onSubmitTesting = () => {
     navigation.navigate(constants.Screens.OTP, {
-      phoneNo: '9958431869',
+      phoneNo: phoneNumber,
     });
   };
 
@@ -346,7 +352,7 @@ const Login = () => {
                 labelStyle={{color: 'white', fontWeight: '600'}}
                 isError
                 onSubmitEditing={() => inputRefs.current[5].focus()}
-                // secureTextEntry
+                secureTextEntry
                 returnKeyType="done"
                 icon={constants.Images.lock}
                 iconStyle={styles.iconStyle}
@@ -364,7 +370,7 @@ const Login = () => {
                 }
                 labelStyle={{color: 'white', fontWeight: '600'}}
                 isError
-                // secureTextEntry
+                secureTextEntry
                 returnKeyType="done"
                 icon={constants.Images.lock}
                 iconStyle={styles.iconStyle}

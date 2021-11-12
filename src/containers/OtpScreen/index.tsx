@@ -32,20 +32,20 @@ const OTPScreen = (props: Props) => {
   const onResendPress = () => {};
   const onSubmitPressOTP = () => {};
   const onPressSave = () => {
-    dispatch(
-      OTPConfirm(
-        {},
-        () => {
-          console.log('success callbacl');
-        },
-        () => {
-          console.log('error callback');
-        },
-      ),
-    );
-    // Router.resetNew(navigation, constants.Screens.Landing, {
-    //   type: 'SIGNUP',
-    // });
+    // dispatch(
+    //   OTPConfirm(
+    //     {},
+    //     () => {
+    //       console.log('success callbacl');
+    //     },
+    //     () => {
+    //       console.log('error callback');
+    //     },
+    //   ),
+    // );
+    Router.resetNew(navigation, constants.Screens.Landing, {
+      type: 'SIGNUP',
+    });
   };
   const onBackPress = () => {
     navigation.goBack();
@@ -64,7 +64,6 @@ const OTPScreen = (props: Props) => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <Header renderLeftButton={renderLeftButton} />
-
       <KeyboardAwareScrollView>
         <View style={styles.constainer}>
           <Image style={styles.appLogo} source={constants.Images.AppLogo} />

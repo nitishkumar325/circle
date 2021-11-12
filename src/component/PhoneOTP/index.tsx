@@ -58,6 +58,13 @@ type Props = {
 
 const PhoneOTP = ({onResend, onSubmit}: Props) => {
   const [code, setCode] = useState('');
+  const otpRef: any = React.useRef();
+
+   useEffect(() => {
+     if (otpRef?.current?.focusField) {
+       otpRef.current.focusField(0);
+     }
+   }, []);
 
   const onResendPress = () => {
     onResend();
@@ -74,9 +81,9 @@ const PhoneOTP = ({onResend, onSubmit}: Props) => {
         codeInputFieldStyle={styles.fieldView}
         onCodeFilled={code => {
           onSubmit(code);
-          setTimeout(() => {
-            setCode('');
-          }, 500);
+          // setTimeout(() => {
+          //   setCode('');
+          // }, 500);
         }}
         codeInputHighlightStyle={styles.underlineStyleHighLighted}
       />
