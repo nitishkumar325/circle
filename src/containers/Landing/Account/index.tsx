@@ -32,10 +32,10 @@ const Home = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Header renderLeftButton={renderLeftButton} />
-
       <View style={styles.innerContainner}>
-        <Text style={styles.activeCiclr}>{'Under Development !'}</Text>
+        <View style={styles.header}>
+          <Header renderLeftButton={renderLeftButton} />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -44,7 +44,6 @@ const Home = () => {
 const styles = StyleSheet.create({
   innerContainner: {
     flex: 1,
-    marginTop: vh(100),
   },
   backButtom: {
     flexDirection: 'row',
@@ -60,12 +59,22 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginLeft: vw(10),
   },
+  header: {
+    backgroundColor: constants.Colors.appthemeColor,
+    borderBottomLeftRadius: vw(200),
+    flexDirection: 'row',
+    height: vh(274),
+  },
   activeCiclr: {
     alignSelf: 'center',
     marginTop: vh(300),
     fontSize: vw(25),
     color: constants.Colors.appButtonColor,
     fontWeight: '600',
+  },
+  customStyle: {
+    height: vh(272),
+    borderBottomLeftRadius: vw(120),
   },
 });
 

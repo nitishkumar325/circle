@@ -15,15 +15,23 @@ interface Props {
   renderRightButton?(): JSX.Element;
   renderLeftButton?(): JSX.Element;
   contentContainerStyle?: ViewStyle;
+  customStyle?: any;
 }
 
 const Header = ({
   renderRightButton = noop,
   renderLeftButton = noop,
   contentContainerStyle = {},
+  customStyle = {},
 }: Props) => {
   return (
-    <View style={[styles.container, contentContainerStyle, styles.header]}>
+    <View
+      style={[
+        styles.container,
+        contentContainerStyle,
+        styles.header,
+        customStyle,
+      ]}>
       {renderLeftButton()}
       {renderRightButton()}
     </View>
@@ -50,9 +58,9 @@ const styles = StyleSheet.create({
   container: {
     height: constants.Normalise(60),
     flexDirection: 'row',
-    alignItems: 'center',
     paddingHorizontal: constants.vw(16),
     justifyContent: 'space-between',
+    paddingTop: vh(16),
   },
 });
 

@@ -17,7 +17,7 @@ const App = () => {
   const Stack = createStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={'Splash'}>
+      <Stack.Navigator initialRouteName={constants.Screens.Landing}>
         <Stack.Screen
           name={'Splash'}
           component={Splash}
