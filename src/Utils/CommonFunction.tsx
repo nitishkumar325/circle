@@ -67,11 +67,11 @@ const validateLastName = (name: string) => {
     : name.length <= 3 && name.length >= 1
     ? {
         status: false,
-        msg: 'last name must be contain 3 character',
+        msg: 'Last name must be contain 3 character',
       }
     : {
         status: false,
-        msg: 'name_validation_error',
+        msg: 'Please enter your name',
       };
 };
 
@@ -87,7 +87,7 @@ const validatePhone = (phone: any) => {
     ? {status: true, msg: ''}
     : {
         status: false,
-        msg: 'invalid phone number',
+        msg: 'Invalid phone number',
       };
 };
 

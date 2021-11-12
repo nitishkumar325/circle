@@ -31,15 +31,14 @@ export default StyleSheet.create({
     height: vh(25),
   },
   textInput: {
-    flex: 0,
     fontWeight: '500',
     textAlign: 'left',
-    width: normalize(300),
     fontSize: normalize(12),
     color: constants.Colors.blackText,
     paddingVertical: vh(12),
     textAlignVertical: 'top',
     paddingLeft: vw(10),
+    flexWrap: 'wrap',
   },
   errorStyle: {
     borderWidth: 1,

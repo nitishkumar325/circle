@@ -20,6 +20,7 @@ import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import Loder from '../../component/Loader/Loader';
 import Header from '../../component/Header';
+import Modal from '../../component/Modal';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -47,6 +48,7 @@ const Login = () => {
   const [emailError, setEmailError] = useState<string>('');
 
   const [loder, setLoder] = React.useState(false);
+  const [isErrorModel, setIsErrorModel] = React.useState(false);
 
   const inputRefs = React.useRef<Array<any>>([]);
   const inputStyles = {
@@ -59,6 +61,27 @@ const Login = () => {
   const showAlert = () => {};
   const onBackPress = () => {
     navigation.goBack();
+  };
+
+  /**
+   * JSX for render view
+   */
+  const renderView = () => {
+    return (
+      <View style={styles.modalParent}>
+        <Text style={styles.empText}>{'Error'}</Text>
+        <View style={styles.seperator} />
+        <Text style={styles.text}>{ErrorMsg}</Text>
+        <CustomButton
+          buttonText={'Sign'}
+          textStyle={{fontSize: vw(12)}}
+          handleAction={() => {
+            setIsErrorModel(false);
+          }}
+          customStyle={styles.modalButton}
+        />
+      </View>
+    );
   };
 
   const onPressSave = () => {
@@ -82,35 +105,44 @@ const Login = () => {
     } else {
       setError(true);
       if (firstNameError) {
-        CommonFunctions.singleButton(
-          'first name must be contain atleast 3 character',
-          '',
-          () => {},
-        );
+        setErrorMsg('First name must be contain atleast 3 character');
+        setIsErrorModel(true);
+        // CommonFunctions.singleButton(
+        //   'First name must be contain atleast 3 character',
+        //   '',
+        //   () => {},
+        // );
       } else if (lastNameError) {
-        CommonFunctions.singleButton(
-          'last name must be contain atleast 3 character',
-          '',
-          () => {},
-        );
+        setErrorMsg(lastNameError);
+        setIsErrorModel(true);
       } else if (phoneNumberError) {
-        CommonFunctions.singleButton('invalid phone number', '', () => {});
+        setErrorMsg(phoneNumberError);
+        setIsErrorModel(true);
+        // CommonFunctions.singleButton('Invalid phone number', '', () => {});
       } else if (confirmPassword !== password) {
-        CommonFunctions.singleButton(
-          'password and confirm should be same ',
-          '',
-          () => {},
-        );
+        setErrorMsg('Password and confirm should be same ');
+        setIsErrorModel(true);
+        // CommonFunctions.singleButton(
+        //   'Password and confirm should be same ',
+        //   '',
+        //   () => {},
+        // );
       } else if (emailError) {
-        CommonFunctions.singleButton(
-          'Incorrect email, please retry',
-          '',
-          () => {},
-        );
+        setErrorMsg(emailError);
+        setIsErrorModel(true);
+        // CommonFunctions.singleButton(
+        //   'Incorrect email, please retry',
+        //   '',
+        //   () => {},
+        // );
       } else if (passwordError) {
-        CommonFunctions.singleButton(passwordError, '', () => {});
+        setErrorMsg(passwordError);
+        setIsErrorModel(true);
+        // CommonFunctions.singleButton(passwordError, '', () => {});
       } else if (confirmPasswordError) {
-        CommonFunctions.singleButton(confirmPasswordError, '', () => {});
+        setErrorMsg(confirmPasswordError);
+        setIsErrorModel(true);
+        // CommonFunctions.singleButton(confirmPasswordError, '', () => {});
       }
     }
   };
@@ -183,14 +215,14 @@ const Login = () => {
     });
   };
 
-const renderLeftButton = () => {
-  return (
-    <TouchableOpacity onPress={onBackPress} style={styles.backButtom}>
-      <Image style={styles.iconColor} source={constants.Images.back} />
-      <Text style={styles.headerTextStyle}>{'Sign Up'}</Text>
-    </TouchableOpacity>
-  );
-};
+  const renderLeftButton = () => {
+    return (
+      <TouchableOpacity onPress={onBackPress} style={styles.backButtom}>
+        <Image style={styles.iconColor} source={constants.Images.back} />
+        <Text style={styles.headerTextStyle}>{'Sign Up'}</Text>
+      </TouchableOpacity>
+    );
+  };
 
   let disabled =
     phoneNumber.length == 0 ||
@@ -306,14 +338,14 @@ const renderLeftButton = () => {
                 placeholder={'Password'}
                 label={'Enter Your Password'}
                 fieldName="password"
-                keyboardType="default"
+                keyboardType="email-address"
                 onChangeText={(type: string, val: string) =>
                   handleChange(type, val)
                 }
                 labelStyle={{color: 'white', fontWeight: '600'}}
                 isError
                 onSubmitEditing={() => inputRefs.current[5].focus()}
-                secureTextEntry
+                // secureTextEntry
                 returnKeyType="done"
                 icon={constants.Images.lock}
                 iconStyle={styles.iconStyle}
@@ -324,14 +356,14 @@ const renderLeftButton = () => {
                 container={inputStyles}
                 placeholder={'Confirm Password'}
                 label={'Re Enter  Password'}
-                keyboardType="default"
+                keyboardType="email-address"
                 fieldName="confirmpassword"
                 onChangeText={(type: string, val: string) =>
                   handleChange(type, val)
                 }
                 labelStyle={{color: 'white', fontWeight: '600'}}
                 isError
-                secureTextEntry
+                // secureTextEntry
                 returnKeyType="done"
                 icon={constants.Images.lock}
                 iconStyle={styles.iconStyle}
@@ -355,17 +387,32 @@ const renderLeftButton = () => {
           }}
           style={{
             fontSize: vw(12),
-            fontWeight: '700',
+            fontWeight: '400',
             alignSelf: 'center',
             position: 'absolute',
             bottom: vh(20),
             color: 'black',
           }}>
-          {'Already Have Account Sign In Now'}
+          {'Already Have Account '}
+          <Text
+            style={{
+              textDecorationLine: 'underline',
+              fontSize: vw(12),
+              fontWeight: '700',
+            }}>
+            {' Sign In Now'}
+          </Text>
         </Text>
       </View>
 
       {loder && <Loder />}
+      <Modal
+        isVisible={isErrorModel}
+        onBackDropPress={() => {
+          setIsErrorModel(false);
+        }}
+        {...{renderView}}
+      />
     </SafeAreaView>
   );
 };
@@ -415,6 +462,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#6a9589',
     paddingVertical: vh(10),
   },
+  modalButton: {
+    width: vw(100),
+    alignSelf: 'center',
+    borderRadius: vw(30),
+    backgroundColor: '#6a9589',
+    paddingVertical: vh(13),
+    marginTop: vh(20),
+  },
   backButtom: {
     flexDirection: 'row',
   },
@@ -426,6 +481,34 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '700',
     marginLeft: vw(10),
+  },
+  modalParent: {
+    width: constants.vw(310),
+    minHeight: vh(150),
+    backgroundColor: constants.Colors.white,
+    paddingVertical: constants.vh(10),
+    borderRadius: constants.vw(20),
+    alignItems: 'center',
+    paddingHorizontal: vw(16),
+  },
+  empText: {
+    fontSize: constants.vw(18),
+    alignSelf: 'center',
+    fontWeight: '700',
+  },
+  text: {
+    fontSize: constants.vw(14),
+    alignSelf: 'center',
+    fontWeight: '400',
+    marginTop: vh(5),
+  },
+  seperator: {
+    width: '90%',
+    backgroundColor: 'grey',
+    height: 1,
+    alignSelf: 'center',
+    marginVertical: constants.vh(5),
+    opacity: 0.3,
   },
 });
 

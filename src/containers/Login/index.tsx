@@ -14,6 +14,7 @@ import {vw, vh} from '../../constants/Dimension';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import CustomButton from '../../component/CustomButton';
 import {useNavigation} from '@react-navigation/native';
+import Modal from '../../component/Modal';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -32,6 +33,7 @@ const Login = () => {
     navigation.navigate(constants.Screens.forget);
   };
 
+ 
   return (
     <SafeAreaView style={{flex: 1}}>
       <KeyboardAwareScrollView
@@ -106,14 +108,23 @@ const Login = () => {
         }}
         style={{
           fontSize: vw(12),
-          fontWeight: '700',
+          fontWeight: '400',
           alignSelf: 'center',
           position: 'absolute',
           bottom: vh(20),
           color: 'black',
         }}>
-        {'Dont have Account Sign Up Now'}
+        {"Don't  have Account"}
+        <Text
+          style={{
+            textDecorationLine: 'underline',
+            fontSize: vw(12),
+            fontWeight: '700',
+          }}>
+          {' Sign Up Now'}
+        </Text>
       </Text>
+      {/* <Modal isVisible={true} onBackDropPress={() => {}} {...{renderView}} /> */}
     </SafeAreaView>
   );
 };
@@ -160,6 +171,34 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: '#6a9589',
     paddingVertical: vh(10),
+  },
+  modalParent: {
+    width: constants.vw(310),
+    minHeight: vh(150),
+    backgroundColor: constants.Colors.white,
+    paddingVertical: constants.vh(10),
+    borderRadius: constants.vw(20),
+    alignItems: 'center',
+    paddingHorizontal: vw(16),
+  },
+  empText: {
+    fontSize: constants.vw(14),
+    alignSelf: 'center',
+    fontWeight: '700',
+  },
+  text: {
+    fontSize: constants.vw(14),
+    alignSelf: 'center',
+    fontWeight: '400',
+    marginTop: vh(5),
+  },
+  seperator: {
+    width: '90%',
+    backgroundColor: 'grey',
+    height: 1,
+    alignSelf: 'center',
+    marginVertical: constants.vh(5),
+    opacity: 0.3,
   },
 });
 

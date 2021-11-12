@@ -210,7 +210,7 @@ CustomTextInput.defaultProps = {
   label: '',
   hasError: '',
   isError: false,
-  maxLength: 40,
+  maxLength: 200,
   container: {},
   editable: false,
   placeholder: '',
