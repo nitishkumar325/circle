@@ -87,6 +87,7 @@ const Login = () => {
   const onPressSave = () => {
     if (
       !firstNameError &&
+      !lastNameError &&
       !emailError &&
       !passwordError &&
       !confirmPasswordError &&
@@ -100,7 +101,7 @@ const Login = () => {
         phone_number: phoneNumber,
         email: email,
       };
-      onSubmitFormHandler();
+      // onSubmitFormHandler();
       console.log('====data', data);
     } else {
       setError(true);
@@ -120,7 +121,7 @@ const Login = () => {
         setIsErrorModel(true);
         // CommonFunctions.singleButton('Invalid phone number', '', () => {});
       } else if (confirmPassword !== password) {
-        setErrorMsg('Password and confirm should be same ');
+        setErrorMsg('Password and confirm Password should be same ');
         setIsErrorModel(true);
         // CommonFunctions.singleButton(
         //   'Password and confirm should be same ',
