@@ -14,4 +14,8 @@ export default {
   searchIcon: require('../assets/Images/ic_search_search.png'),
   Home: require('../assets/Images/home.png'),
   circle: require('../assets/Images/circle.png'),
+  ellipse: require('../assets/Images/ellipse.png'),
+  calendar: require('../assets/Images/calendar.png'),
+  ellipse1: require('../assets/Images/ellipse1.png'),
+  ellipse3: require('../assets/Images/ellipse3.png'),
 };

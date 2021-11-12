@@ -62,7 +62,7 @@ const OTPScreen = (props: Props) => {
     );
   };
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <Header renderLeftButton={renderLeftButton} />
       <KeyboardAwareScrollView>
         <View style={styles.constainer}>
@@ -99,6 +99,8 @@ const styles = StyleSheet.create({
   constainer: {
     flex: 1,
     alignSelf: 'center',
+    backgroundColor: 'white',
+    height: '100%',
   },
   appLogo: {
     height: vw(150),
@@ -110,12 +112,14 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: vw(22),
     textAlign: 'center',
+    color: 'black',
   },
   sent: {
     fontWeight: '600',
     fontSize: vw(12),
     textAlign: 'center',
     marginTop: vh(10),
+    color: 'black',
   },
   pencil: {
     tintColor: 'white',
@@ -140,6 +144,7 @@ const styles = StyleSheet.create({
   number: {
     fontWeight: '600',
     fontSize: vw(12),
+    color: 'black',
     textAlign: 'center',
   },
   saveButtonContainer: {
