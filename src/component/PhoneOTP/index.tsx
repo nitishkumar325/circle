@@ -60,11 +60,11 @@ const PhoneOTP = ({onResend, onSubmit}: Props) => {
   const [code, setCode] = useState('');
   const otpRef: any = React.useRef();
 
-   useEffect(() => {
-     if (otpRef?.current?.focusField) {
-       otpRef.current.focusField(0);
-     }
-   }, []);
+  useEffect(() => {
+    if (otpRef?.current?.focusField) {
+      otpRef.current.focusField(0);
+    }
+  }, []);
 
   const onResendPress = () => {
     onResend();

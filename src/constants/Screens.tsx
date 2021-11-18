@@ -8,4 +8,7 @@ export default {
   Home: 'Home',
   Circle: 'Circle',
   Account: 'Account',
+  EditProfilePicture: 'EditProfilePicture',
+  EditProfile: 'EditProfile',
+  ResetPasswordLogin: 'ResetPasswordLogin',
 };

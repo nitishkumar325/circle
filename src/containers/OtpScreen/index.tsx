@@ -18,34 +18,49 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Router from '../../navigator/routes';
 
 import {OTPConfirm} from '../../modules/Auth';
+import Loader from '../../component/Loader/Loader';
 
 interface Props {
   route: any;
 }
 
 const OTPScreen = (props: Props) => {
+  // const {authLoder} = useSelector((state: {Auth: any}) => ({
+  //   authLoder: state.Auth.authLoder,
+  // }));
+  const [loder, setLoder] = React.useState(false);
+
   const dispatch = useDispatch();
-
-  const {phoneNo} = props.route.params;
-
+  const [useCode, setUserCode] = React.useState('');
+  const {phoneNo, email} = props.route.params;
+  // const phoneNo = '9958431869';
   const navigation = useNavigation();
   const onResendPress = () => {};
-  const onSubmitPressOTP = () => {};
+  const onSubmitPressOTP = (code: any) => {
+    setUserCode(code);
+  };
   const onPressSave = () => {
-    // dispatch(
-    //   OTPConfirm(
-    //     {},
-    //     () => {
-    //       console.log('success callbacl');
-    //     },
-    //     () => {
-    //       console.log('error callback');
-    //     },
-    //   ),
-    // );
-    Router.resetNew(navigation, constants.Screens.Landing, {
-      type: 'SIGNUP',
-    });
+    setLoder(true);
+    console.log('data', email, useCode);
+    dispatch(
+      OTPConfirm(
+        {
+          email: email,
+          confirmationcode: useCode,
+        },
+        () => {
+          setLoder(false);
+          console.log('success callbacl');
+          Router.resetNew(navigation, constants.Screens.Landing, {
+            type: 'SIGNUP',
+          });
+        },
+        () => {
+          setLoder(false);
+          console.log('error callback');
+        },
+      ),
+    );
   };
   const onBackPress = () => {
     navigation.goBack();
@@ -91,6 +106,7 @@ const OTPScreen = (props: Props) => {
           />
         </View>
       </KeyboardAwareScrollView>
+      {loder && <Loader />}
     </SafeAreaView>
   );
 };

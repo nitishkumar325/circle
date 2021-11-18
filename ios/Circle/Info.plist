@@ -41,6 +41,10 @@
 	<string></string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Required camera for uploading company's logo</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Required camera for uploading company's logo</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

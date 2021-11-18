@@ -58,7 +58,7 @@ export default StyleSheet.create({
     marginVertical: normalize(6),
   },
   starStyle: {
-    color: constants.Colors.red,
+    color: constants.Colors.black,
   },
   borderRedError: {
     borderWidth: 1,

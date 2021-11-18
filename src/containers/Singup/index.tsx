@@ -34,11 +34,12 @@ const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [phoneNumberError, setPhoneNumberError] = useState<string>('');
 
-  const [password, setPassword] = useState<string>('');
+  const [password, setPassword] = useState<string>('Team@321!');
   const [passwordError, setPasswordError] = useState<string>('');
 
-  const [confirmPassword, setconfirmPassword] = useState<string>('');
-  const [confirmPasswordError, setconfirmPasswordError] = useState<string>('');
+  const [confirmPassword, setconfirmPassword] = useState<string>('Team@321!');
+  const [confirmPasswordError, setconfirmPasswordError] =
+    useState<string>('');
 
   const [Error, setError] = useState(false);
 
@@ -101,8 +102,8 @@ const Login = () => {
         phone_number: phoneNumber,
         email: email,
       };
-      // onSubmitFormHandler();
-      DemoMove();
+      onSubmitFormHandler();
+      // DemoMove();
       console.log('====data', data);
     } else {
       setError(true);
@@ -169,9 +170,10 @@ const Login = () => {
       .then(response => {
         setLoder(false);
         console.log('response', response);
-        if (response.data.status === 200) {
+        if (response.data.status === 201) {
           navigation.navigate(constants.Screens.OTP, {
-            phoneNo: '9958431869',
+            phoneNo: phoneNumber,
+            email: email,
           });
         } else {
           CommonFunctions.singleButton(response.data.message, 'OK', () => {});

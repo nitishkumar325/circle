@@ -13,12 +13,55 @@ import {useNavigation} from '@react-navigation/native';
 import constants from '../../../constants';
 
 const Home = () => {
+  const navigation = useNavigation();
+  const DATA = [
+    {
+      icon: constants.Images.profile_pencil,
+      title: 'Edit Profile',
+      forward: constants.Screens.EditProfile,
+      id: 0,
+    },
+    {
+      icon: constants.Images.profile_pencil,
+      title: 'Reset Password',
+      forward: constants.Screens.ResetPasswordLogin,
+      id: 1,
+    },
+    {
+      icon: constants.Images.lock,
+      title: 'Privacy & Security',
+      forward: '',
+      id: 2,
+    },
+    {
+      icon: constants.Images.lock,
+      title: 'Logout',
+      forward: '',
+      id: 3,
+    },
+  ];
+
   const onBackPress = () => {};
 
-  const renderRightButton = () => {
+  const renderItemList = (item: any) => {
+    const {icon, title, forward, id} = item;
     return (
-      <TouchableOpacity style={styles.backButtom}>
-        <Image style={styles.iconColor} source={constants.Images.bell_icon} />
+      <TouchableOpacity
+        onPress={() => forward != '' && navigation.navigate(forward)}
+        style={[
+          styles.row,
+          {marginHorizontal: vw(30), marginVertical: vh(20), marginTop: vh(20)},
+        ]}>
+        <View style={styles.circle}>
+          <Image style={styles.iconStyle} source={icon} />
+        </View>
+        <Text style={styles.title}>{title}</Text>
+        {id !== 3 && (
+          <Image
+            style={styles.rightArrow}
+            source={constants.Images.right_Arrow}
+          />
+        )}
       </TouchableOpacity>
     );
   };
@@ -30,12 +73,50 @@ const Home = () => {
     );
   };
 
+  const onButtonEdit = () => {
+    navigation.navigate(constants.Screens.EditProfilePicture);
+  };
+
+  const renderProfileSection = () => {
+    return (
+      <View style={styles.innerIcon}>
+        <View style={styles.width}>
+          <Image
+            resizeMode="contain"
+            style={styles.imageStyle}
+            source={constants.Images.ellipse}
+          />
+          <TouchableOpacity onPress={onButtonEdit} style={styles.whiteCircle}>
+            <Image style={styles.pencil} source={constants.Images.app_Pencil} />
+          </TouchableOpacity>
+        </View>
+        <View style={[styles.alignRow, styles.marginLeft20]}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Text numberOfLines={1} style={styles.userName}>
+              {'Jhon Joe'}
+            </Text>
+            <View style={styles.appGreenCircle}>
+              <Image
+                style={styles.pencilWhite}
+                source={constants.Images.app_Pencil}
+              />
+            </View>
+          </View>
+          <Text style={styles.userEmail}>{'jhon.doe@gmail.com'}</Text>
+          <Text style={styles.userEmail}>{'9988776655'}</Text>
+        </View>
+      </View>
+    );
+  };
+
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, paddingHorizontal: vw(16)}}>
       <View style={styles.innerContainner}>
         <View style={styles.header}>
           <Header renderLeftButton={renderLeftButton} />
+          {renderProfileSection()}
         </View>
+        {DATA.map(item => renderItemList(item))}
       </View>
     </SafeAreaView>
   );
@@ -47,6 +128,7 @@ const styles = StyleSheet.create({
   },
   backButtom: {
     flexDirection: 'row',
+    marginLeft: vw(10),
   },
   iconColor: {
     tintColor: 'white',
@@ -57,13 +139,11 @@ const styles = StyleSheet.create({
     fontSize: vw(18),
     color: 'white',
     fontWeight: '700',
-    marginLeft: vw(10),
   },
   header: {
     backgroundColor: constants.Colors.appthemeColor,
-    borderBottomLeftRadius: vw(200),
-    flexDirection: 'row',
-    height: vh(274),
+    borderBottomLeftRadius: vw(100),
+    height: vh(300),
   },
   activeCiclr: {
     alignSelf: 'center',
@@ -74,7 +154,97 @@ const styles = StyleSheet.create({
   },
   customStyle: {
     height: vh(272),
-    borderBottomLeftRadius: vw(120),
+  },
+  imageStyle: {
+    height: vw(140),
+    width: vw(140),
+    borderWidth: 3,
+    borderRadius: vw(70),
+  },
+  whiteCircle: {
+    height: vw(30),
+    width: vw(30),
+    backgroundColor: 'white',
+    borderRadius: vw(15),
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+  },
+  pencil: {
+    height: vw(12),
+    width: vw(12),
+  },
+  innerIcon: {
+    marginLeft: vw(20),
+    marginTop: vh(20),
+    flexDirection: 'row',
+  },
+  width: {
+    width: vw(140),
+  },
+  alignRow: {
+    alignContent: 'center',
+    alignSelf: 'center',
+  },
+  pencilWhite: {
+    tintColor: 'white',
+    height: vw(8),
+    width: vw(8),
+  },
+  appGreenCircle: {
+    height: vw(19),
+    width: vw(19),
+    backgroundColor: constants.Colors.appButtonColor,
+    borderRadius: vw(9),
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: vw(5),
+  },
+  marginLeft20: {
+    marginLeft: vw(20),
+  },
+  userName: {
+    fontSize: vw(22),
+    fontWeight: 'bold',
+    maxWidth: vw(100),
+    color: 'white',
+  },
+  userEmail: {
+    fontSize: vw(16),
+    fontWeight: '400',
+    maxWidth: vw(200),
+    marginTop: vh(10),
+    color: 'white',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  circle: {
+    height: vw(35),
+    width: vw(35),
+    borderRadius: vw(35 / 2),
+    backgroundColor: constants.Colors.appthemeColor,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  iconStyle: {
+    height: vw(12),
+    width: vw(12),
+    tintColor: 'white',
+  },
+  title: {
+    fontSize: vw(16),
+    marginLeft: vw(10),
+    color: '#373737',
+    width: vw(147),
+  },
+  rightArrow: {
+    height: vw(6),
+    width: vw(6),
+    marginLeft: vw(110),
   },
 });
 

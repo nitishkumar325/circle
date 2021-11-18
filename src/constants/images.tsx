@@ -18,4 +18,10 @@ export default {
   calendar: require('../assets/Images/calendar.png'),
   ellipse1: require('../assets/Images/ellipse1.png'),
   ellipse3: require('../assets/Images/ellipse3.png'),
+  app_Pencil: require('../assets/Images/app_Pencil.png'),
+  profile_pencil: require('../assets/Images/profile_pencil.png'),
+  right_Arrow: require('../assets/Images/right_Arrow.png'),
+  ic_placeholder: require('../assets/Images/ic_placeholder.png'),
+  editAccountCamera: require('../assets/Images/ic_edit_profile_camera.png'),
+  errorIcon: require('../assets/Images/Warning.png'),
 };

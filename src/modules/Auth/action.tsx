@@ -15,8 +15,6 @@ export const updateName = (str: string) => {
 
 export const OTPConfirm = (params: Object, callback?: any, Fail?: Function) => {
   return (dispatch: any, getState: Function) => {
-    const {isConnected} = getState().GlobalReducer;
-    const {bookingSummary} = getState().Booking;
     dispatch({
       type: Actions.Loder,
       payload: {
@@ -29,14 +27,20 @@ export const OTPConfirm = (params: Object, callback?: any, Fail?: Function) => {
         ...params,
       },
       (res: any) => {
-        let data = res.data.data;
-        callback();
-        dispatch({
-          type: Actions.Loder,
-          payload: {
-            authLoder: false,
-          },
-        });
+        let data = res.data;
+        if (data.status === 200) {
+          callback();
+          dispatch({
+            type: Actions.Loder,
+            payload: {
+              authLoder: false,
+            },
+          });
+        } else {
+          Fail && Fail();
+          let message = data.message;
+          utils.CommonFunctions.showSnackbar(message, constants.Colors.black);
+        }
       },
       (err: any) => {
         dispatch({
@@ -46,7 +50,7 @@ export const OTPConfirm = (params: Object, callback?: any, Fail?: Function) => {
           },
         });
         Fail && Fail();
-        let message = err.data.body;
+        let message = err.data.message;
         utils.CommonFunctions.showSnackbar(message, constants.Colors.black);
       },
     );

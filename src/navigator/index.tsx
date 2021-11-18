@@ -12,6 +12,9 @@ import Landing from '../../src/containers/Landing';
 
 import OTPScreen from '../../src/containers/OtpScreen';
 import constants from '../../src/constants';
+import EditProfilePicture from '../containers/Landing/Account/EditProfilePicture';
+import EditProfile from '../containers/Landing/Account/EditProfile';
+import ResetPasswordLogin from '../containers/Landing/Account/ResetPasswordLogin';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -75,6 +78,33 @@ const App = () => {
         <Stack.Screen
           name={constants.Screens.Landing}
           component={Landing}
+          options={{
+            gestureEnabled: false,
+            ...TransitionPresets.SlideFromRightIOS,
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name={constants.Screens.EditProfilePicture}
+          component={EditProfilePicture}
+          options={{
+            gestureEnabled: false,
+            ...TransitionPresets.SlideFromRightIOS,
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name={constants.Screens.EditProfile}
+          component={EditProfile}
+          options={{
+            gestureEnabled: false,
+            ...TransitionPresets.SlideFromRightIOS,
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name={constants.Screens.ResetPasswordLogin}
+          component={ResetPasswordLogin}
           options={{
             gestureEnabled: false,
             ...TransitionPresets.SlideFromRightIOS,
