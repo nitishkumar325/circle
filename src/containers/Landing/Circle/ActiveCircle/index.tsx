@@ -7,36 +7,20 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {vw, vh} from '../../../constants/Dimension';
-import Header from '../../../component/Header';
+import {vw, vh} from '../../../../constants/Dimension';
+import Header from '../../../../component/Header';
 import {useNavigation} from '@react-navigation/native';
-import constants from '../../../constants';
-import CustomTextInput from '../../../component/CustomTextInput';
-import CustomButton from '../../../component/CustomButton';
+import constants from '../../../../constants';
+import CustomTextInput from '../../../../component/CustomTextInput';
+import CustomButton from '../../../../component/CustomButton';
 
-const Home = () => {
-  const onBackPress = () => {};
+const ActiveCircle = () => {
   const inputStyles = {
     width: vw(320),
+    marginBottom: vh(10),
     backgroundColor: 'white',
     borderRadius: vw(10),
   };
-
-  const renderRightButton = () => {
-    return (
-      <TouchableOpacity style={styles.backButtom}>
-        <Image style={styles.iconColor} source={constants.Images.bell_icon} />
-      </TouchableOpacity>
-    );
-  };
-  const renderLeftButton = () => {
-    return (
-      <TouchableOpacity style={styles.backButtom}>
-        <Text style={styles.headerTextStyle}>{'Home'}</Text>
-      </TouchableOpacity>
-    );
-  };
-
   const renderView = () => {
     return (
       <View>
@@ -104,45 +88,25 @@ const Home = () => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#fbfbfb'}}>
-      <Header
-        renderRightButton={renderRightButton}
-        renderLeftButton={renderLeftButton}
+    <View style={{flex: 1, backgroundColor: '#fbfbfb', paddingTop: vh(20)}}>
+      {renderView()}
+      {renderView()}
+      {renderView()}
+      {/* {renderView()}
+      {renderView()} */}
+
+      <CustomButton
+        isDisabled={false}
+        buttonText={'+ Create A Circle'}
+        // handleAction={onPressSave}
+        handleAction={() => {}}
+        textStyle={styles.textStyle}
+        customStyle={[
+          styles.saveButtonContainer,
+          {backgroundColor: constants.Colors.appButtonColor},
+        ]}
       />
-
-      <View style={styles.innerContainner}>
-        <CustomTextInput
-          autoCapitalize="sentences"
-          container={inputStyles}
-          labelStyle={{color: 'white', fontWeight: '600'}}
-          label={'Search Circles'}
-          fieldName="accountNumber"
-          keyboardType="default"
-          icon={constants.Images.searchIcon}
-          onChangeText={(type: string, val: string) => {}}
-          isError
-          iconStyle={styles.iconStyle}
-        />
-
-        <Text style={styles.active}>{'Active Circle'}</Text>
-        {renderView()}
-        {renderView()}
-        {renderView()}
-        {renderView()}
-
-        <CustomButton
-          isDisabled={false}
-          buttonText={'+ Create A Circle'}
-          // handleAction={onPressSave}
-          handleAction={() => {}}
-          textStyle={styles.textStyle}
-          customStyle={[
-            styles.saveButtonContainer,
-            {backgroundColor: constants.Colors.appButtonColor},
-          ]}
-        />
-      </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -151,7 +115,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: vh(20),
     alignSelf: 'center',
-    backgroundColor: '#fbfbfb',
   },
   backButtom: {
     flexDirection: 'row',
@@ -179,7 +142,7 @@ const styles = StyleSheet.create({
   },
   saveButtonContainer: {
     bottom: vh(15),
-    width: vw(250),
+    width: vw(283),
     alignSelf: 'center',
     borderRadius: vw(30),
     position: 'absolute',
@@ -194,8 +157,7 @@ const styles = StyleSheet.create({
     fontSize: vw(16),
     color: 'black',
     fontWeight: '500',
-    marginBottom: vh(13),
-    marginTop: vh(20),
+    marginBottom: vh(5),
   },
   containeer: {
     flexDirection: 'row',
@@ -211,7 +173,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.32,
     shadowRadius: 5.46,
     elevation: 9,
-    marginVertical: vh(5),
+    marginVertical: vh(10),
+    marginHorizontal: vw(10),
   },
   imageStyle: {
     height: vw(38),
@@ -237,4 +200,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default ActiveCircle;

@@ -74,7 +74,7 @@ const PhoneOTP = ({onResend, onSubmit}: Props) => {
     <View style={styles.phoneOTPContainer}>
       <OTPInputView
         code={code}
-        pinCount={4}
+        pinCount={6}
         autoFocusOnLoad
         style={styles.otpContainer}
         onCodeChanged={code => setCode(code)}

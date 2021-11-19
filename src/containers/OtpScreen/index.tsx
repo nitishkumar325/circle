@@ -42,25 +42,28 @@ const OTPScreen = (props: Props) => {
   const onPressSave = () => {
     setLoder(true);
     console.log('data', email, useCode);
-    dispatch(
-      OTPConfirm(
-        {
-          email: email,
-          confirmationcode: useCode,
-        },
-        () => {
-          setLoder(false);
-          console.log('success callbacl');
-          Router.resetNew(navigation, constants.Screens.Landing, {
-            type: 'SIGNUP',
-          });
-        },
-        () => {
-          setLoder(false);
-          console.log('error callback');
-        },
-      ),
-    );
+    Router.resetNew(navigation, constants.Screens.Landing, {
+      type: 'SIGNUP',
+    });
+    // dispatch(
+    //   OTPConfirm(
+    //     {
+    //       email: email,
+    //       confirmationcode: useCode,
+    //     },
+    //     () => {
+    //       setLoder(false);
+    //       console.log('success callbacl');
+    //       Router.resetNew(navigation, constants.Screens.Landing, {
+    //         type: 'SIGNUP',
+    //       });
+    //     },
+    //     () => {
+    //       setLoder(false);
+    //       console.log('error callback');
+    //     },
+    //   ),
+    // );
   };
   const onBackPress = () => {
     navigation.goBack();

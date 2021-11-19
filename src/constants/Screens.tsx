@@ -11,4 +11,6 @@ export default {
   EditProfilePicture: 'EditProfilePicture',
   EditProfile: 'EditProfile',
   ResetPasswordLogin: 'ResetPasswordLogin',
+  ActiveCircle: 'ActiveCircle',
+  PendingCircle: 'PendingCircle',
 };

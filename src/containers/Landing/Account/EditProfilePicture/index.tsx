@@ -57,7 +57,8 @@ const EditProfilePicture = () => {
         console.log('path', path);
         setProfileImage(path);
       },
-      () => {
+      (err: any) => {
+        console.log('====erri', err);
         setLoading(false);
       },
     );

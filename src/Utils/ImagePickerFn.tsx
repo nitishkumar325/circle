@@ -23,6 +23,9 @@ const myPicker = {
   getCamera: (callback: Function, error: Function) => {
     ImagePicker.openCamera({
       cropping: true,
+      compressImageQuality: 0.1,
+      compressVideoPreset: 'Passthrough',
+      freeStyleCropEnabled: true,
     })
       .then((image: any) => {
         const arr = image.path.split('/');
@@ -30,7 +33,7 @@ const myPicker = {
         callback(image.path, image.mime, filename);
       })
       .catch(error2 => {
-        console.log('error', error);
+        console.log('error', error2);
         error();
       });
   },

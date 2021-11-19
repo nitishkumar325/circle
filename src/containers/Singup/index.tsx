@@ -34,12 +34,11 @@ const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [phoneNumberError, setPhoneNumberError] = useState<string>('');
 
-  const [password, setPassword] = useState<string>('Team@321!');
+  const [password, setPassword] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
 
-  const [confirmPassword, setconfirmPassword] = useState<string>('Team@321!');
-  const [confirmPasswordError, setconfirmPasswordError] =
-    useState<string>('');
+  const [confirmPassword, setconfirmPassword] = useState<string>('');
+  const [confirmPasswordError, setconfirmPasswordError] = useState<string>('');
 
   const [Error, setError] = useState(false);
 
@@ -102,8 +101,8 @@ const Login = () => {
         phone_number: phoneNumber,
         email: email,
       };
-      onSubmitFormHandler();
-      // DemoMove();
+      // onSubmitFormHandler();
+      DemoMove();
       console.log('====data', data);
     } else {
       setError(true);
@@ -151,7 +150,7 @@ const Login = () => {
   };
   const DemoMove = () => {
     navigation.navigate(constants.Screens.OTP, {
-      phoneNo: 9999999999,
+      phoneNo: phoneNumber,
     });
   };
   const onSubmitFormHandler = () => {

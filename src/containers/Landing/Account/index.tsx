@@ -110,7 +110,7 @@ const Home = () => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, paddingHorizontal: vw(16)}}>
+    <SafeAreaView style={{flex: 1}}>
       <View style={styles.innerContainner}>
         <View style={styles.header}>
           <Header renderLeftButton={renderLeftButton} />
@@ -144,6 +144,7 @@ const styles = StyleSheet.create({
     backgroundColor: constants.Colors.appthemeColor,
     borderBottomLeftRadius: vw(100),
     height: vh(300),
+    width: '100%',
   },
   activeCiclr: {
     alignSelf: 'center',
