@@ -9,7 +9,7 @@ const isAndroid = Platform.OS == 'android';
 const hitslope = {left: 10, right: 10, top: 10, bottom: 10};
 const PlatformNumber = isAndroid ? 0 : 1;
 const ENV_DATA = {
-  BASE_URL: 'http://ec2-3-144-181-158.us-east-2.compute.amazonaws.com:8080',
+  BASE_URL: 'http://ec2-3-110-148-238.ap-south-1.compute.amazonaws.com:8080',
 };
 const $http = axios.create({
   baseURL: ENV_DATA.BASE_URL,

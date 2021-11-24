@@ -227,7 +227,7 @@ CustomTextInput.defaultProps = {
   onIconPress: () => {},
   // @ts-ignore
   keyboardType: 'default',
-  showSecureTextEntry: false,
+showSecureTextEntry: false,
   hidePasswordToggle: false,
   onSubmitEditing: () => {},
   isCountEnable: false,

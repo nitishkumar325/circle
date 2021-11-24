@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -16,9 +16,16 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import CustomButton from '../../component/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../component/Header';
+import {forgetPassword} from '../../modules/Auth';
+import {useDispatch, useSelector} from 'react-redux';
+import CommonFunction from '../../Utils/CommonFunction';
 
 const Forget = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState<string>('');
+  const [emailError, setEmailError] = useState<string>('');
 
   const inputRefs = React.useRef<Array<any>>([]);
   const inputStyles = {
@@ -29,7 +36,23 @@ const Forget = () => {
   };
 
   const onPressSave = () => {
-    navigation.navigate(constants.Screens.ResetPassword);
+    // setLoder(true);
+    // navigation.navigate(constants.Screens.ResetPassword);
+
+    dispatch(
+      forgetPassword(
+        {
+          email: email,
+        },
+        () => {
+          navigation.navigate(constants.Screens.ResetPassword);
+        },
+        () => {
+          console.log('error callback');
+        },
+      ),
+    );
+    // navigation.navigate(constants.Screens.ResetPassword);
   };
 
   const onBackPress = () => {
@@ -74,19 +97,26 @@ const Forget = () => {
                 placeholder={'Email /Phone no'}
                 labelStyle={{color: 'white', fontWeight: '600'}}
                 label={'Email /Phone no'}
-                fieldName="accountNumber"
+                fieldName="email"
                 keyboardType="default"
                 icon={constants.Images.mobile_icon}
-                onChangeText={(type: string, val: string) => {}}
+                onChangeText={(type: string, val: string) => {
+                  setEmail(CommonFunction.normalizeEmail(val));
+                  setEmailError(CommonFunction.validateEmail(val).msg);
+                }}
                 onSubmitEditing={() => inputRefs.current[1].focus()}
                 isError
                 iconStyle={styles.iconStyle}
               />
             </View>
             <CustomButton
+              isDisabled={email.length == 0}
               buttonText={'Submit'}
               handleAction={onPressSave}
-              customStyle={styles.saveButtonContainer}
+              customStyle={[
+                styles.saveButtonContainer,
+                {backgroundColor: email.length == 0 ? 'grey' : '#6a9589'},
+              ]}
             />
           </ImageBackground>
         </View>

@@ -34,10 +34,10 @@ const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [phoneNumberError, setPhoneNumberError] = useState<string>('');
 
-  const [password, setPassword] = useState<string>('');
+  const [password, setPassword] = useState<string>('Team@123!');
   const [passwordError, setPasswordError] = useState<string>('');
 
-  const [confirmPassword, setconfirmPassword] = useState<string>('');
+  const [confirmPassword, setconfirmPassword] = useState<string>('Team@123!');
   const [confirmPasswordError, setconfirmPasswordError] = useState<string>('');
 
   const [Error, setError] = useState(false);
@@ -101,8 +101,8 @@ const Login = () => {
         phone_number: phoneNumber,
         email: email,
       };
-      // onSubmitFormHandler();
-      DemoMove();
+      onSubmitFormHandler();
+      // DemoMove();
       console.log('====data', data);
     } else {
       setError(true);
@@ -157,7 +157,7 @@ const Login = () => {
     setLoder(true);
     axios({
       method: 'POST',
-      url: 'http://ec2-3-144-181-158.us-east-2.compute.amazonaws.com:8080/api/auth/signup',
+      url: 'http://ec2-3-110-148-238.ap-south-1.compute.amazonaws.com:8080/api/auth/signup',
       data: {
         name: `${userName}${' '}${lastName}`,
         password: password,
@@ -181,7 +181,7 @@ const Login = () => {
       .catch((error: any) => {
         setLoder(false);
         console.log('error', error);
-        CommonFunctions.singleButton(error.data.body, 'OK', () => {});
+        // CommonFunctions.singleButton(error.data.body, 'OK', () => {});
       });
   };
 

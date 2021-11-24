@@ -16,9 +16,13 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import CustomButton from '../../component/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../component/Header';
+import {useDispatch, useSelector} from 'react-redux';
+import { forgetPassword, resetPassword } from '../../modules/Auth';
+
 
 const ResetPassword = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const inputRefs = React.useRef<Array<any>>([]);
   const inputStyles = {
@@ -29,7 +33,22 @@ const ResetPassword = () => {
   };
 
   const onPressSave = () => {
-    navigation.pop(2);
+    //navigation.pop(2);
+    dispatch(
+      resetPassword(
+        {
+          email: 'rio123@yopmail.com',
+          password: 'Admin@123!',
+          confirmationcode: '123456',
+        },
+        () => {
+          navigation.pop(2);
+        },
+        () => {
+          console.log('error callback');
+        },
+      ),
+    );
   };
 
   const onBackPress = () => {

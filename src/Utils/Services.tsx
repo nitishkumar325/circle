@@ -14,7 +14,7 @@ const postApiCall = (
       successCallback(response);
     })
     .catch((error: any) => {
-      console.log('put response error', error + endPoint);
+      console.log('post response error', error + endPoint);
       errorCalback(error);
     });
 };
