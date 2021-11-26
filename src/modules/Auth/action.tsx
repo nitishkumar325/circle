@@ -164,7 +164,7 @@ export const resetPassword = (
       },
     });
     utils.Services.postApiCall(
-      utils.EndPoint.forget,
+      utils.EndPoint.resetPassword,
       {
         ...params,
       },
@@ -193,7 +193,7 @@ export const resetPassword = (
           },
         });
         Fail && Fail();
-        let message = err.data.message;
+        let message = err?.data?.message;
         utils.CommonFunctions.showSnackbar(message, constants.Colors.black);
       },
     );

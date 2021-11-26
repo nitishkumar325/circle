@@ -45,7 +45,9 @@ const Forget = () => {
           email: email,
         },
         () => {
-          navigation.navigate(constants.Screens.ResetPassword);
+          navigation.navigate(constants.Screens.ResetPassword, {
+            email,
+          });
         },
         () => {
           console.log('error callback');

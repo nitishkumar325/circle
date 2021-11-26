@@ -20,7 +20,13 @@ import CommonFunctions from '../../../../Utils/CommonFunction';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import showSnackbar from '../../../../Utils/snackbar';
 
-const ResetPasswordLogin = () => {
+interface Props {
+  props: any;
+  route: any;
+}
+
+const ResetPasswordLogin = (props: Props) => {
+  const {email} = props?.route?.params;
   const navigation = useNavigation();
   const inputRefs = React.useRef<Array<any>>([]);
   const actionSheet: any = React.useRef();

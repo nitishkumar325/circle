@@ -202,8 +202,8 @@ const styles = StyleSheet.create({
   },
   OrUploadNew: {
     fontSize: vw(14),
-    fontWeight: '400',
     marginTop: vh(33),
+    color: 'black',
   },
   dottedView: {
     borderStyle: 'dotted',

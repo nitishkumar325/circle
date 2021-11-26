@@ -49,7 +49,7 @@ const Login = () => {
   };
 
   const apiCallForLogin = () => {
-              setLoder(true);
+        setLoder(true);
     dispatch(
       userLogin(
         {
