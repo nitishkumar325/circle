@@ -11,8 +11,13 @@ import {vw, vh} from '../../../constants/Dimension';
 import Header from '../../../component/Header';
 import {useNavigation} from '@react-navigation/native';
 import constants from '../../../constants';
+import {useDispatch, useSelector} from 'react-redux';
+import {setLoginBoolean} from '../../../modules/Auth';
+import Router from '../../../navigator/routes';
 
 const Home = () => {
+  const dispatch = useDispatch();
+
   const navigation = useNavigation();
   const DATA = [
     {
@@ -34,6 +39,12 @@ const Home = () => {
       id: 2,
     },
     {
+      icon: constants.Images.help_icon,
+      title: 'Help',
+      forward: constants.Screens.Help,
+      id: 4,
+    },
+    {
       icon: constants.Images.lock,
       title: 'Logout',
       forward: '',
@@ -42,25 +53,43 @@ const Home = () => {
   ];
 
   const onBackPress = () => {};
+  const onLogoutPress = () => {
+    console.log('on logout oress');
+    dispatch(setLoginBoolean(false));
+    Router.resetNew(navigation, constants.Screens.Login, {
+      type: 'Login',
+    });
+  };
 
   const renderItemList = (item: any) => {
     const {icon, title, forward, id} = item;
     return (
       <TouchableOpacity
-        onPress={() => forward != '' && navigation.navigate(forward)}
+        onPress={() =>
+          id === 3
+            ? onLogoutPress()
+            : forward != '' && navigation.navigate(forward)
+        }
         style={[
           styles.row,
           {marginHorizontal: vw(30), marginVertical: vh(20), marginTop: vh(20)},
         ]}>
         <View style={styles.circle}>
-          <Image style={styles.iconStyle} source={icon} />
+          <Image
+            resizeMethod="resize"
+            resizeMode="contain"
+            style={styles.iconStyle}
+            source={icon}
+          />
         </View>
         <Text style={styles.title}>{title}</Text>
         {id !== 3 && (
-          <Image
-            style={styles.rightArrow}
-            source={constants.Images.right_Arrow}
-          />
+          <TouchableOpacity onPress={onLogoutPress}>
+            <Image
+              style={styles.rightArrow}
+              source={constants.Images.right_Arrow}
+            />
+          </TouchableOpacity>
         )}
       </TouchableOpacity>
     );
@@ -68,7 +97,7 @@ const Home = () => {
   const renderLeftButton = () => {
     return (
       <TouchableOpacity style={styles.backButtom}>
-        <Text style={styles.headerTextStyle}>{'Account'}</Text>
+        <Text style={styles.headerTextStyle}>{'Profile'}</Text>
       </TouchableOpacity>
     );
   };

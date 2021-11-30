@@ -24,4 +24,8 @@ export default {
   ic_placeholder: require('../assets/Images/ic_placeholder.png'),
   editAccountCamera: require('../assets/Images/ic_edit_profile_camera.png'),
   errorIcon: require('../assets/Images/Warning.png'),
+  help_icon: require('../assets/Images/help_Icon.png'),
+  mail: require('../assets/Images/mail.png'),
+  call: require('../assets/Images/call.png'),
+  location: require('../assets/Images/location.png'),
 };

@@ -1,7 +1,8 @@
 import * as Actions from './types';
 const initialState = {
   name: '',
-  authLoder:false,
+  authLoder: false,
+  isLogin: false,
 };
 
 const AuthReducer = (state = initialState, action: any) => {
@@ -9,6 +10,8 @@ const AuthReducer = (state = initialState, action: any) => {
     case Actions.SET:
       return {...state, ...action.payload};
     case Actions.Loder:
+      return {...state, ...action.payload};
+    case Actions.setLogin:
       return {...state, ...action.payload};
     default:
       return state;

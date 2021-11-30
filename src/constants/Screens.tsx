@@ -7,10 +7,11 @@ export default {
   Landing: 'Landing',
   Home: 'Home',
   Circle: 'Circle',
-  Account: 'Account',
+  Account: 'Profile',
   EditProfilePicture: 'EditProfilePicture',
   EditProfile: 'EditProfile',
   ResetPasswordLogin: 'ResetPasswordLogin',
   ActiveCircle: 'ActiveCircle',
   PendingCircle: 'PendingCircle',
+  Help: 'Help',
 };

@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
     height: vw(55),
     paddingVertical: vw(11),
     backgroundColor: '#fbfbfb',
+    marginTop: vh(10),
   },
   label: {
     fontSize: vw(14),

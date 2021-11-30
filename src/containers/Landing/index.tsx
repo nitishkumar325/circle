@@ -82,7 +82,7 @@ function UserBottomStack() {
             </Text>
           );
         },
-        
+
         // tabBarItemStyle: {backgroundColor: 'red'},
       })}
       initialRouteName={constants.Screens.Home}>
@@ -97,7 +97,7 @@ function UserBottomStack() {
         component={Circle}
       />
       <Tab.Screen
-        options={{title: 'Account'}}
+        options={{title: 'Profile'}}
         name={constants.Screens.Account}
         component={Account}
       />

@@ -23,6 +23,7 @@ import CommonFunction from '../../Utils/CommonFunction';
 const Forget = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const [loder, setLoder] = React.useState(false);
 
   const [email, setEmail] = useState<string>('');
   const [emailError, setEmailError] = useState<string>('');
@@ -36,7 +37,7 @@ const Forget = () => {
   };
 
   const onPressSave = () => {
-    // setLoder(true);
+    setLoder(true);
     // navigation.navigate(constants.Screens.ResetPassword);
 
     dispatch(
@@ -45,11 +46,13 @@ const Forget = () => {
           email: email,
         },
         () => {
+          setLoder(false);
           navigation.navigate(constants.Screens.ResetPassword, {
             email,
           });
         },
         () => {
+          setLoder(false);
           console.log('error callback');
         },
       ),

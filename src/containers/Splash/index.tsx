@@ -3,13 +3,20 @@ import {View, Text, StyleSheet, SafeAreaView, Image} from 'react-native';
 import constants from '../../constants';
 import {vw} from '../../constants/Dimension';
 import {useNavigation} from '@react-navigation/native';
+import {useSelector, useDispatch} from 'react-redux';
 
 const Splash = () => {
+  const {isLogin} = useSelector((state: {Auth: any}) => ({
+    isLogin: state.Auth.isLogin,
+  }));
+
   const navigation = useNavigation();
 
   React.useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('Login')
+      isLogin
+        ? navigation.navigate(constants.Screens.Landing)
+        : navigation.navigate('Login');
     }, 3000);
   }, []);
 

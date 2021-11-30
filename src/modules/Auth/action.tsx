@@ -1,13 +1,14 @@
 import * as Actions from './types';
 import utils from '../../Utils';
 import constants from '../../constants';
+import {Alert} from 'react-native';
 
-export const updateName = (str: string) => {
+export const setLoginBoolean = (status: any) => {
   return (dispatch: Function) => {
     dispatch({
       type: Actions.SET,
       payload: {
-        name: 'Hello',
+        isLogin: status,
       },
     });
   };
@@ -81,9 +82,8 @@ export const userLogin = (params: Object, callback?: any, Fail?: Function) => {
             },
           });
         } else {
-          Fail && Fail();
-          let message = data.message;
-          utils.CommonFunctions.showSnackbar(message, constants.Colors.black);
+          // Fail && Fail(res);
+          utils.CommonFunctions.showSnackbar('error', constants.Colors.black);
         }
       },
       (err: any) => {
@@ -94,9 +94,8 @@ export const userLogin = (params: Object, callback?: any, Fail?: Function) => {
             authLoder: false,
           },
         });
-        Fail && Fail();
-        let message = err.data.message;
-        utils.CommonFunctions.showSnackbar(message, constants.Colors.black);
+        // Fail && Fail(err);
+        utils.CommonFunctions.showSnackbar(err, constants.Colors.black);
       },
     );
   };
@@ -130,9 +129,9 @@ export const forgetPassword = (
             },
           });
         } else {
-          Fail && Fail();
-          let message = data.message;
-          utils.CommonFunctions.showSnackbar(message, constants.Colors.black);
+          // Fail && Fail();
+          // let message = data.message;
+          utils.CommonFunctions.showSnackbar('error', constants.Colors.black);
         }
       },
       (err: any) => {
@@ -143,9 +142,9 @@ export const forgetPassword = (
             authLoder: false,
           },
         });
-        Fail && Fail();
-        let message = err.data.message;
-        utils.CommonFunctions.showSnackbar(message, constants.Colors.black);
+        Fail && Fail(err);
+        // let message = err.data.message;
+        utils.CommonFunctions.showSnackbar('error', constants.Colors.black);
       },
     );
   };

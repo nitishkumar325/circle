@@ -9,7 +9,7 @@ import Signup from '../../src/containers/Singup';
 import Forget from '../../src/containers/ForgetScreen';
 import ResetPassword from '../../src/containers/ResetPassword';
 import Landing from '../../src/containers/Landing';
-
+import Help from '../containers/Landing/Account/Help';
 import OTPScreen from '../../src/containers/OtpScreen';
 import constants from '../../src/constants';
 import EditProfilePicture from '../containers/Landing/Account/EditProfilePicture';
@@ -24,6 +24,15 @@ const App = () => {
         <Stack.Screen
           name={'Splash'}
           component={Splash}
+          options={{
+            gestureEnabled: false,
+            ...TransitionPresets.SlideFromRightIOS,
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name={'Help'}
+          component={Help}
           options={{
             gestureEnabled: false,
             ...TransitionPresets.SlideFromRightIOS,

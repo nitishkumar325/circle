@@ -21,6 +21,7 @@ import axios from 'axios';
 import Loder from '../../component/Loader/Loader';
 import Header from '../../component/Header';
 import Modal from '../../component/Modal';
+import Utils from '../../Utils';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -34,10 +35,10 @@ const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [phoneNumberError, setPhoneNumberError] = useState<string>('');
 
-  const [password, setPassword] = useState<string>('Team@123!');
+  const [password, setPassword] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
 
-  const [confirmPassword, setconfirmPassword] = useState<string>('Team@123!');
+  const [confirmPassword, setconfirmPassword] = useState<string>('');
   const [confirmPasswordError, setconfirmPasswordError] = useState<string>('');
 
   const [Error, setError] = useState(false);
@@ -157,7 +158,7 @@ const Login = () => {
     setLoder(true);
     axios({
       method: 'POST',
-      url: 'http://ec2-3-110-148-238.ap-south-1.compute.amazonaws.com:8080/api/auth/signup',
+      url: 'http://3.7.240.41:8080/api/auth/signup',
       data: {
         name: `${userName}${' '}${lastName}`,
         password: password,
@@ -180,8 +181,7 @@ const Login = () => {
       })
       .catch((error: any) => {
         setLoder(false);
-        console.log('error', error);
-        // CommonFunctions.singleButton(error.data.body, 'OK', () => {});
+        Utils.CommonFunctions.showSnackbar('Error', constants.Colors.black); // CommonFunctions.singleButton(error.data.body, 'OK', () => {});
       });
   };
 

@@ -17,7 +17,7 @@ import {useNavigation} from '@react-navigation/native';
 import Modal from '../../component/Modal';
 import {useDispatch, useSelector} from 'react-redux';
 import CommonFunction from '../../Utils/CommonFunction';
-import {userLogin} from '../../modules/Auth';
+import {setLoginBoolean, userLogin} from '../../modules/Auth';
 import Router from '../../navigator/routes';
 import Loader from '../../component/Loader/Loader';
 
@@ -28,7 +28,7 @@ const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [phoneNumberError, setPhoneNumberError] = useState<string>('');
 
-  const [password, setPassword] = useState<string>('Team@123!');
+  const [password, setPassword] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
 
   const [email, setEmail] = useState<string>('');
@@ -49,7 +49,7 @@ const Login = () => {
   };
 
   const apiCallForLogin = () => {
-        setLoder(true);
+    setLoder(true);
     dispatch(
       userLogin(
         {
@@ -58,6 +58,7 @@ const Login = () => {
         },
         () => {
           setLoder(false);
+          dispatch(setLoginBoolean(true));
           Router.resetNew(navigation, constants.Screens.Landing, {
             type: 'SIGNUP',
           });
