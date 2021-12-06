@@ -3,6 +3,9 @@ const initialState = {
   name: '',
   authLoder: false,
   isLogin: false,
+  email: '',
+  phone: '',
+  username: '',
 };
 
 const AuthReducer = (state = initialState, action: any) => {
@@ -13,6 +16,10 @@ const AuthReducer = (state = initialState, action: any) => {
       return {...state, ...action.payload};
     case Actions.setLogin:
       return {...state, ...action.payload};
+    case Actions.USER_DETAIL:
+      return {...state, ...action.payload};
+    case Actions.SET_INITIAL:
+      return {...initialState};
     default:
       return state;
   }

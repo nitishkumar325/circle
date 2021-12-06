@@ -12,11 +12,17 @@ import Header from '../../../component/Header';
 import {useNavigation} from '@react-navigation/native';
 import constants from '../../../constants';
 import {useDispatch, useSelector} from 'react-redux';
-import {setLoginBoolean} from '../../../modules/Auth';
+import {setIntialState, setLoginBoolean} from '../../../modules/Auth';
 import Router from '../../../navigator/routes';
 
 const Home = () => {
   const dispatch = useDispatch();
+
+  const {email, name, phone} = useSelector((state: {Auth: any}) => ({
+    email: state.Auth.email,
+    name: state.Auth.name,
+    phone: state.Auth.phone,
+  }));
 
   const navigation = useNavigation();
   const DATA = [
@@ -55,10 +61,13 @@ const Home = () => {
   const onBackPress = () => {};
   const onLogoutPress = () => {
     console.log('on logout oress');
-    dispatch(setLoginBoolean(false));
-    Router.resetNew(navigation, constants.Screens.Login, {
-      type: 'Login',
-    });
+    // dispatch(setLoginBoolean(false));
+    dispatch(setIntialState());
+    setTimeout(() => {
+      Router.resetNew(navigation, constants.Screens.Login, {
+        type: 'Login',
+      });
+    }, 500);
   };
 
   const renderItemList = (item: any) => {
@@ -122,7 +131,7 @@ const Home = () => {
         <View style={[styles.alignRow, styles.marginLeft20]}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text numberOfLines={1} style={styles.userName}>
-              {'Jhon Joe'}
+              {name?.length != '' ? name : 'Jhon Dhoe'}
             </Text>
             <View style={styles.appGreenCircle}>
               <Image
@@ -131,8 +140,12 @@ const Home = () => {
               />
             </View>
           </View>
-          <Text style={styles.userEmail}>{'jhon.doe@gmail.com'}</Text>
-          <Text style={styles.userEmail}>{'9988776655'}</Text>
+          <Text style={styles.userEmail}>
+            {email?.length != '' ? email : 'jhon.doe@gmail.com'}
+          </Text>
+          <Text style={styles.userEmail}>
+            {phone?.length != '' ? phone : '9853263222'}
+          </Text>
         </View>
       </View>
     );
@@ -238,7 +251,7 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: vw(22),
     fontWeight: 'bold',
-    maxWidth: vw(100),
+    maxWidth: vw(200),
     color: 'white',
   },
   userEmail: {

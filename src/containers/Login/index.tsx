@@ -171,7 +171,7 @@ const Login = () => {
                 iconStyle={styles.iconStyle}
               />
               <Text onPress={onForgetPassword} style={styles.forgetPasword}>
-                {'Forget Password ?'}
+                {'Forgot Password ?'}
               </Text>
             </View>
             <CustomButton

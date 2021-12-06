@@ -14,6 +14,24 @@ export const setLoginBoolean = (status: any) => {
   };
 };
 
+export const setIntialState = () => {
+  return (dispatch: Function) => {
+    dispatch({
+      type: Actions.SET_INITIAL,
+      payload: {},
+    });
+  };
+};
+
+export const setLocalDetail = (userDetail: any) => {
+  return (dispatch: Function) => {
+    dispatch({
+      type: Actions.USER_DETAIL,
+      payload: userDetail,
+    });
+  };
+};
+
 export const OTPConfirm = (params: Object, callback?: any, Fail?: Function) => {
   return (dispatch: any, getState: Function) => {
     dispatch({
@@ -38,7 +56,6 @@ export const OTPConfirm = (params: Object, callback?: any, Fail?: Function) => {
             },
           });
         } else {
-          Fail && Fail();
           let message = data.message;
           utils.CommonFunctions.showSnackbar(message, constants.Colors.black);
         }
@@ -72,7 +89,7 @@ export const userLogin = (params: Object, callback?: any, Fail?: Function) => {
         ...params,
       },
       (res: any) => {
-        let data = res.data;
+        let data = res?.data;
         if (data.status === 200) {
           callback();
           dispatch({
@@ -94,8 +111,8 @@ export const userLogin = (params: Object, callback?: any, Fail?: Function) => {
             authLoder: false,
           },
         });
-        // Fail && Fail(err);
-        utils.CommonFunctions.showSnackbar(err, constants.Colors.black);
+        Fail && Fail();
+        utils.CommonFunctions.showSnackbar('error', constants.Colors.black);
       },
     );
   };

@@ -22,9 +22,12 @@ import Loder from '../../component/Loader/Loader';
 import Header from '../../component/Header';
 import Modal from '../../component/Modal';
 import Utils from '../../Utils';
+import {useDispatch} from 'react-redux';
+import {setLocalDetail} from '../../modules/Auth';
 
 const Login = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const [userName, setUserName] = React.useState('');
   const [firstNameError, setFirstNameError] = React.useState<string>('');
@@ -169,12 +172,20 @@ const Login = () => {
     })
       .then(response => {
         setLoder(false);
-        console.log('response', response);
         if (response.data.status === 201) {
-          navigation.navigate(constants.Screens.OTP, {
-            phoneNo: phoneNumber,
-            email: email,
-          });
+          dispatch(
+            setLocalDetail({
+              name: `${userName}${' '}${lastName}`,
+              phone: phoneNumber,
+              email: email,
+            }),
+          );
+          setTimeout(() => {
+            navigation.navigate(constants.Screens.OTP, {
+              phoneNo: phoneNumber,
+              email: email,
+            });
+          }, 500);
         } else {
           CommonFunctions.singleButton(response.data.message, 'OK', () => {});
         }
@@ -346,7 +357,7 @@ const Login = () => {
                 placeholder={'Password'}
                 label={'Enter Your Password'}
                 fieldName="password"
-                keyboardType="email-address"
+                keyboardType="default"
                 onChangeText={(type: string, val: string) =>
                   handleChange(type, val)
                 }
@@ -364,7 +375,7 @@ const Login = () => {
                 container={inputStyles}
                 placeholder={'Confirm Password'}
                 label={'Re Enter  Password'}
-                keyboardType="email-address"
+                keyboardType="default"
                 fieldName="confirmpassword"
                 onChangeText={(type: string, val: string) =>
                   handleChange(type, val)

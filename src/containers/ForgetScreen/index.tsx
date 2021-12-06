@@ -67,7 +67,7 @@ const Forget = () => {
     return (
       <TouchableOpacity onPress={onBackPress} style={styles.backButtom}>
         <Image style={styles.iconColor} source={constants.Images.back} />
-        <Text style={styles.headerTextStyle}>{'Forget Password'}</Text>
+        <Text style={styles.headerTextStyle}>{'Forgot Password'}</Text>
       </TouchableOpacity>
     );
   };
@@ -94,7 +94,7 @@ const Forget = () => {
               />
             </View>
             <View style={styles.alignLeft40}>
-              <Text style={styles.signin}>{'Forget Password ?'}</Text>
+              <Text style={styles.signin}>{'Forgot Password ?'}</Text>
               <CustomTextInput
                 ref={ref => (inputRefs.current[0] = ref)}
                 autoCapitalize="sentences"
