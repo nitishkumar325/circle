@@ -17,7 +17,12 @@ import {useNavigation} from '@react-navigation/native';
 import Modal from '../../component/Modal';
 import {useDispatch, useSelector} from 'react-redux';
 import CommonFunction from '../../Utils/CommonFunction';
-import {setLoginBoolean, userLogin} from '../../modules/Auth';
+import {
+  setLocalDetail,
+  setLoginBoolean,
+  setLoginInfo,
+  userLogin,
+} from '../../modules/Auth';
 import Router from '../../navigator/routes';
 import Loader from '../../component/Loader/Loader';
 
@@ -56,16 +61,22 @@ const Login = () => {
           email: email,
           password: password,
         },
-        () => {
+        (res: any) => {
+          console.log('res', res);
           setLoder(false);
           dispatch(setLoginBoolean(true));
+          dispatch(setLoginInfo(res));
           Router.resetNew(navigation, constants.Screens.Landing, {
             type: 'SIGNUP',
           });
         },
-        () => {
+        (error: any) => {
           setLoder(false);
-          console.log('error callback');
+          console.log('error callback', error);
+          CommonFunction.showSnackbar(
+            error.data.errors[0].defaultMessage,
+            'black',
+          );
         },
       ),
     );

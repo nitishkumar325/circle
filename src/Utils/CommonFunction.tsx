@@ -1,5 +1,6 @@
 import {Alert} from 'react-native';
 import Snackbar from 'react-native-snackbar';
+import moment from 'moment';
 
 const nameRegex = /^[a-zA-Z0-9 ]{3,50}$/;
 const phoneRegex = /^\d{10}$/;
@@ -121,6 +122,14 @@ const validatePassword = (pass: string) => {
       };
 };
 
+const formattedDate = (
+  d = moment(new Date()).subtract(13, 'years').toDate(),
+) => {
+  return [d.getMonth() + 1, d.getDate(), d.getFullYear()]
+    .map(n => (n < 10 ? `0${n}` : `${n}`))
+    .join('-');
+};
+
 const singleButton = (
   alertMessage: string,
   okText: any,
@@ -133,6 +142,8 @@ const singleButton = (
     },
   ]);
 };
+
+
 export default {
   removeEmojis,
   normalizeName,
@@ -145,4 +156,5 @@ export default {
   validateEmail,
   validatePassword,
   showSnackbar,
+  formattedDate,
 };

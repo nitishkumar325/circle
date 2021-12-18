@@ -6,6 +6,7 @@ const initialState = {
   email: '',
   phone: '',
   username: '',
+  avatar: '',
 };
 
 const AuthReducer = (state = initialState, action: any) => {
@@ -15,6 +16,8 @@ const AuthReducer = (state = initialState, action: any) => {
     case Actions.Loder:
       return {...state, ...action.payload};
     case Actions.setLogin:
+      return {...state, ...action.payload};
+    case Actions.SET_LOGI_INFO:
       return {...state, ...action.payload};
     case Actions.USER_DETAIL:
       return {...state, ...action.payload};

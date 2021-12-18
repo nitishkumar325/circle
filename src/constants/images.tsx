@@ -28,4 +28,13 @@ export default {
   mail: require('../assets/Images/mail.png'),
   call: require('../assets/Images/call.png'),
   location: require('../assets/Images/location.png'),
+  arrow_down: require('../assets/Images/ic_language_dropdown.png'),
+  cross: require('../assets/Images/close.png'),
+  emptyCheckBox: require('../assets/Images/emptyCheckBox.png'),
+  fillCheckBox: require('../assets/Images/fillCheckBox.png'),
+  calender: require('../assets/Images/calender.png'),
+  up: require('../assets/Images/Upload.png'),
+  delete: require('../assets/Images/delete_icon.png'),
+  crossCirlce: require('../assets/Images/crossCircle.png'),
+  icon_tick: require('../assets/Images/icon_tick.png'),
 };

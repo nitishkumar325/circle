@@ -15,6 +15,9 @@ import constants from '../../src/constants';
 import EditProfilePicture from '../containers/Landing/Account/EditProfilePicture';
 import EditProfile from '../containers/Landing/Account/EditProfile';
 import ResetPasswordLogin from '../containers/Landing/Account/ResetPasswordLogin';
+import CreateCircle from '../containers/Landing/CreateCircle';
+import AddMember from '../containers/Landing/CreateCircle/AddMember';
+import Terms from '../containers/TermsCondition';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -42,6 +45,24 @@ const App = () => {
         <Stack.Screen
           name={constants.Screens.Login}
           component={Login}
+          options={{
+            gestureEnabled: false,
+            ...TransitionPresets.SlideFromRightIOS,
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name={constants.Screens.Terms}
+          component={Terms}
+          options={{
+            gestureEnabled: false,
+            ...TransitionPresets.SlideFromRightIOS,
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name={constants.Screens.createCircle}
+          component={CreateCircle}
           options={{
             gestureEnabled: false,
             ...TransitionPresets.SlideFromRightIOS,
@@ -87,6 +108,15 @@ const App = () => {
         <Stack.Screen
           name={constants.Screens.Landing}
           component={Landing}
+          options={{
+            gestureEnabled: false,
+            ...TransitionPresets.SlideFromRightIOS,
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name={constants.Screens.addMember}
+          component={AddMember}
           options={{
             gestureEnabled: false,
             ...TransitionPresets.SlideFromRightIOS,

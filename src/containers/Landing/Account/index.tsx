@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {vw, vh} from '../../../constants/Dimension';
 import Header from '../../../component/Header';
@@ -14,14 +15,16 @@ import constants from '../../../constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {setIntialState, setLoginBoolean} from '../../../modules/Auth';
 import Router from '../../../navigator/routes';
+import Utils from '../../../Utils';
 
 const Home = () => {
   const dispatch = useDispatch();
 
-  const {email, name, phone} = useSelector((state: {Auth: any}) => ({
+  const {email, name, phone, avatar} = useSelector((state: {Auth: any}) => ({
     email: state.Auth.email,
     name: state.Auth.name,
     phone: state.Auth.phone,
+    avatar: state.Auth.avatar,
   }));
 
   const navigation = useNavigation();
@@ -58,17 +61,37 @@ const Home = () => {
     },
   ];
 
-  const onBackPress = () => {};
   const onLogoutPress = () => {
-    console.log('on logout oress');
-    // dispatch(setLoginBoolean(false));
-    dispatch(setIntialState());
-    setTimeout(() => {
-      Router.resetNew(navigation, constants.Screens.Login, {
-        type: 'Login',
-      });
-    }, 500);
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to exit ?',
+      [
+        {text: 'Cancel', onPress: () => {}},
+        {
+          text: 'OK',
+          onPress: () => {
+                dispatch(setIntialState());
+                Router.resetNew(navigation, constants.Screens.Login, {
+                  type: 'Login',
+                });
+          },
+        },
+      ],
+      {cancelable: false},
+    );
   };
+
+  // Utils.CommonFunctions.singleButton(
+  //   'Are you sure you want to exit ?',
+  //   'Logout',
+  //   () => {
+  //     dispatch(setIntialState());
+  //     Router.resetNew(navigation, constants.Screens.Login, {
+  //       type: 'Login',
+  //     });
+  //   },
+  // );
+  // dispatch(setLoginBoolean(false));
 
   const renderItemList = (item: any) => {
     const {icon, title, forward, id} = item;
@@ -93,7 +116,7 @@ const Home = () => {
         </View>
         <Text style={styles.title}>{title}</Text>
         {id !== 3 && (
-          <TouchableOpacity onPress={onLogoutPress}>
+          <TouchableOpacity>
             <Image
               style={styles.rightArrow}
               source={constants.Images.right_Arrow}
@@ -119,11 +142,15 @@ const Home = () => {
     return (
       <View style={styles.innerIcon}>
         <View style={styles.width}>
-          <Image
-            resizeMode="contain"
-            style={styles.imageStyle}
-            source={constants.Images.ellipse}
-          />
+          {avatar === null ? (
+            <Image
+              resizeMode="contain"
+              style={styles.imageStyle}
+              source={constants.Images.ic_placeholder}
+            />
+          ) : (
+            <Image style={styles.imageStyle} source={{uri: avatar}} />
+          )}
           <TouchableOpacity onPress={onButtonEdit} style={styles.whiteCircle}>
             <Image style={styles.pencil} source={constants.Images.app_Pencil} />
           </TouchableOpacity>
@@ -144,7 +171,7 @@ const Home = () => {
             {email?.length != '' ? email : 'jhon.doe@gmail.com'}
           </Text>
           <Text style={styles.userEmail}>
-            {phone?.length != '' ? phone : '9853263222'}
+            {phone?.length != '' ? phone : 'N/A'}
           </Text>
         </View>
       </View>

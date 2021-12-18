@@ -14,4 +14,7 @@ export default {
   ActiveCircle: 'ActiveCircle',
   PendingCircle: 'PendingCircle',
   Help: 'Help',
+  createCircle: 'CreateCircle',
+  addMember: 'AddMember',
+  Terms: 'Terms',
 };

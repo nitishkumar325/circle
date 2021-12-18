@@ -89,6 +89,7 @@ const Login = () => {
   };
 
   const onPressSave = () => {
+    console.log('callcall');
     if (
       !firstNameError &&
       !lastNameError &&
@@ -107,7 +108,6 @@ const Login = () => {
       };
       onSubmitFormHandler();
       // DemoMove();
-      console.log('====data', data);
     } else {
       setError(true);
       if (firstNameError) {
@@ -153,11 +153,13 @@ const Login = () => {
     }
   };
   const DemoMove = () => {
-    navigation.navigate(constants.Screens.OTP, {
+    navigation.navigate(constants.Screens.Terms, {
       phoneNo: phoneNumber,
+      onPressSave: onPressSave,
     });
   };
   const onSubmitFormHandler = () => {
+    console.log('callcall');
     setLoder(true);
     axios({
       method: 'POST',
@@ -171,6 +173,7 @@ const Login = () => {
       },
     })
       .then(response => {
+        console.log('resp', response);
         setLoder(false);
         if (response.data.status === 201) {
           dispatch(
@@ -187,12 +190,20 @@ const Login = () => {
             });
           }, 500);
         } else {
-          CommonFunctions.singleButton(response.data.message, 'OK', () => {});
+           Utils.CommonFunctions.showSnackbar(
+             response.data.message,
+             'black',
+           );
         }
       })
-      .catch((error: any) => {
+      .catch((Error: any) => {
+        console.log('qdjqwhkdkq', Error.response);
         setLoder(false);
-        Utils.CommonFunctions.showSnackbar('Error', constants.Colors.black); // CommonFunctions.singleButton(error.data.body, 'OK', () => {});
+        console.log('===error', Error.response.data.errors[0].defaultMessage);
+        Utils.CommonFunctions.showSnackbar(
+          Error.response.data.errors[0].defaultMessage,
+          'black',
+        );
       });
   };
 
@@ -229,7 +240,7 @@ const Login = () => {
   };
 
   const onSubmitTesting = () => {
-    navigation.navigate(constants.Screens.OTP, {
+    navigation.navigate(constants.Screens.Terms, {
       phoneNo: phoneNumber,
     });
   };
@@ -392,7 +403,7 @@ const Login = () => {
           <CustomButton
             isDisabled={disabled}
             buttonText={'Sign Up'}
-            handleAction={onPressSave}
+            handleAction={DemoMove}
             // handleAction={onSubmitTesting}
             customStyle={[
               styles.saveButtonContainer,
@@ -491,6 +502,7 @@ const styles = StyleSheet.create({
   },
   backButtom: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   iconColor: {
     tintColor: 'white',
@@ -520,6 +532,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontWeight: '400',
     marginTop: vh(5),
+    color: 'black',
   },
   seperator: {
     width: '90%',

@@ -26,7 +26,6 @@ interface Props {
 }
 
 const ResetPasswordLogin = (props: Props) => {
-  const {email} = props?.route?.params;
   const navigation = useNavigation();
   const inputRefs = React.useRef<Array<any>>([]);
   const actionSheet: any = React.useRef();

@@ -19,12 +19,15 @@ import Router from '../../navigator/routes';
 
 import {OTPConfirm, setLoginBoolean} from '../../modules/Auth';
 import Loader from '../../component/Loader/Loader';
+import {ScrollView} from 'react-native-gesture-handler';
 
 interface Props {
   route: any;
+  onPressSave: any;
 }
 
 const OTPScreen = (props: Props) => {
+  const {onPressSave} = props.route.params;
   // const {authLoder} = useSelector((state: {Auth: any}) => ({
   //   authLoder: state.Auth.authLoder,
   // }));
@@ -39,33 +42,7 @@ const OTPScreen = (props: Props) => {
   const onSubmitPressOTP = (code: any) => {
     setUserCode(code);
   };
-  const onPressSave = () => {
-    setLoder(true);
-    console.log('data', email, useCode);
-    dispatch(setLoginBoolean(true));
-    Router.resetNew(navigation, constants.Screens.Landing, {
-      type: 'SIGNUP',
-    });
-    // dispatch(
-    //   OTPConfirm(
-    //     {
-    //       email: email,
-    //       confirmationcode: useCode,
-    //     },
-    //     () => {
-    //       setLoder(false);
-    //       console.log('success callbacl');
-    //       Router.resetNew(navigation, constants.Screens.Landing, {
-    //         type: 'SIGNUP',
-    //       });
-    //     },
-    //     () => {
-    //       setLoder(false);
-    //       console.log('error callback');
-    //     },
-    //   ),
-    // );
-  };
+
   const onBackPress = () => {
     navigation.goBack();
   };
@@ -76,40 +53,48 @@ const OTPScreen = (props: Props) => {
     return (
       <TouchableOpacity onPress={onBackPress} style={styles.backButtom}>
         <Image style={styles.iconColor} source={constants.Images.back} />
-        <Text style={styles.headerTextStyle}>{'OTP'}</Text>
+        <Text style={styles.headerTextStyle}>{'Circles'}</Text>
       </TouchableOpacity>
     );
   };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <Header renderLeftButton={renderLeftButton} />
-      <KeyboardAwareScrollView>
-        <View style={styles.constainer}>
-          <Image style={styles.appLogo} source={constants.Images.AppLogo} />
-          <Text style={styles.veri}>{'Verification Code'}</Text>
-          <Text style={styles.sent}>
-            {'We have sent the verification code to\n Your Mobile Number'}
-          </Text>
-          <View style={styles.alignRow}>
-            <Text style={styles.number}>{`${'+91'}${phoneNo}`}</Text>
-            <TouchableOpacity
-              onPress={onchangePhone}
-              style={styles.greenCircle}>
-              <Image
-                style={styles.pencil}
-                source={constants.Images.otp_pencil}
-              />
-            </TouchableOpacity>
-          </View>
-          <PhoneOTP onResend={onResendPress} onSubmit={onSubmitPressOTP} />
+      <ScrollView>
+        <View style={{flex: 1, marginBottom: vh(100)}}>
+          <Text
+            style={
+              styles.hori
+            }>{`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`}</Text>
           <CustomButton
-            buttonText={'Verify'}
-            handleAction={onPressSave}
-            customStyle={styles.saveButtonContainer}
-            textStyle={styles.textStyle}
+            isDisabled={false}
+            buttonText={'Accept'}
+            handleAction={() => {
+              onPressSave();
+            }}
+            // handleAction={onSubmitTesting}
+            customStyle={[
+              styles.saveButtonContainer,
+              {backgroundColor: false ? 'grey' : '#6a9589'},
+            ]}
+          />
+          <CustomButton
+            isDisabled={false}
+            buttonText={'Reject'}
+            textStyle={{color: '#6a9589'}}
+            handleAction={() => {
+              setTimeout(() => {
+                Router.resetNew(navigation, constants.Screens.Login, {
+                  type: 'Login',
+                });
+              }, 500);
+            }}
+            // handleAction={onSubmitTesting}
+            customStyle={[styles.saveButtonContainer, styles.extra]}
           />
         </View>
-      </KeyboardAwareScrollView>
+      </ScrollView>
+
       {loder && <Loader />}
     </SafeAreaView>
   );
@@ -178,6 +163,7 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: vw(14),
     fontWeight: '600',
+    color:'black'
   },
   backButtom: {
     flexDirection: 'row',
@@ -191,6 +177,17 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '700',
     marginLeft: vw(10),
+  },
+  hori: {
+    marginHorizontal: vw(22),
+    fontSize: vw(22),
+    color: 'black',
+  },
+  extra: {
+    borderWidth: 1,
+    backgroundColor: '#fbfbfb',
+    borderColor: '#6a9589',
+    color: '#6a9589',
   },
 });
 

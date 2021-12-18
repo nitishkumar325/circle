@@ -18,13 +18,18 @@ import Loader from '../../../../component/Loader/Loader';
 import CustomTextInput from '../../../../component/CustomTextInput';
 import CommonFunctions from '../../../../Utils/CommonFunction';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useDispatch, useSelector} from 'react-redux';
+import Utils from '../../../../Utils';
 
 const EditProfile = () => {
+  const {avatar} = useSelector((state: {Auth: any}) => ({
+    avatar: state.Auth.avatar,
+  }));
   const navigation = useNavigation();
   const inputRefs = React.useRef<Array<any>>([]);
   const actionSheet: any = React.useRef();
   const [loading, setLoading] = React.useState(false);
-  const [profileImage, setProfileImage] = React.useState('');
+  const [profileImg, setProfileImg] = React.useState(avatar);
 
   const [userName, setUserName] = React.useState('');
   const [firstNameError, setFirstNameError] = React.useState<string>('');
@@ -91,9 +96,17 @@ const EditProfile = () => {
     }
   };
 
+  const ApiCall = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      Utils.CommonFunctions.showSnackbar('something went wrong', 'black');
+    }, 3000);
+  };
+
   const onDonePress = () => {
     if (!emailError && !firstNameError && !lastNameError && !phoneNumberError) {
-      setError(false);
+      ApiCall();
     } else {
       setError(true);
       if (emailError) {
@@ -109,9 +122,10 @@ const EditProfile = () => {
   };
 
   const onRemovePress = () => {
-    setProfileImage('');
+    setProfileImg('');
   };
 
+  console.log('profileimg', profileImg);
   let disabled =
     phoneNumber.length == 0 ||
     userName.length == 0 ||
@@ -124,13 +138,13 @@ const EditProfile = () => {
       <KeyboardAwareScrollView>
         <View style={styles.innerContainner}>
           <View style={styles.profilePicture}>
-            {profileImage === '' ? (
+            {profileImg === null ? (
               <Image
                 style={styles.image}
                 source={constants.Images.ic_placeholder}
               />
             ) : (
-              <Image style={styles.image} source={{uri: profileImage}} />
+              <Image style={styles.image} source={{uri: profileImg}} />
             )}
             <Text onPress={onRemovePress} style={styles.removeStyle}>
               {'Remove'}
@@ -279,6 +293,7 @@ const styles = StyleSheet.create({
     fontSize: vw(14),
     fontWeight: '400',
     marginTop: vh(33),
+    
   },
   dottedView: {
     borderStyle: 'dotted',

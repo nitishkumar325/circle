@@ -15,7 +15,7 @@ const postApiCall = (
     })
     .catch((error: any) => {
       console.log('post response error', error + endPoint);
-      errorCalback(error);
+      errorCalback(error.response);
     });
 };
 
@@ -33,7 +33,7 @@ const putApiCall = (
     })
     .catch((error: any) => {
       console.log('put response error', error + endPoint);
-      errorCalback(error);
+      errorCalback(error.response);
     });
 };
 
@@ -51,7 +51,7 @@ const getApiCall = (
     })
     .catch((error: any) => {
       console.log('get response error', error + endPoint);
-      errorCalback(error);
+      errorCalback(error.response);
     });
 };
 
@@ -70,7 +70,7 @@ const patchApiCall = (
     .catch((error: any) => {
       console.log('patch response error', error);
 
-      errorCalback(error);
+      errorCalback(error.response);
     });
 };
 

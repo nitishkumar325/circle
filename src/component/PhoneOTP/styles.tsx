@@ -80,6 +80,6 @@ export default StyleSheet.create({
     fontSize: vw(14),
     fontWeight: '500',
     marginTop: vh(30),
-    color:'black'
+    color: 'black',
   },
 });

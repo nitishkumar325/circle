@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import {vw, vh} from '../../../../constants/Dimension';
 import Header from '../../../../component/Header';
@@ -13,22 +14,44 @@ import {useNavigation} from '@react-navigation/native';
 import constants from '../../../../constants';
 import CustomTextInput from '../../../../component/CustomTextInput';
 import CustomButton from '../../../../component/CustomButton';
+import {Screen} from 'react-native-screens';
+import {useDispatch} from 'react-redux';
+import {getCircle} from '../../../../modules/Auth';
+import moment from 'moment';
 
 const ActiveCircle = () => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const [circle, setCircle] = React.useState([]);
+
   const inputStyles = {
     width: vw(320),
     marginBottom: vh(10),
     backgroundColor: 'white',
     borderRadius: vw(10),
   };
-  const renderView = () => {
+
+  React.useEffect(() => {
+    dispatch(
+      getCircle(
+        (res: any) => {
+          setCircle(res);
+          console.log('res', res);
+        },
+        (err: any) => {
+          console.log('err', err);
+        },
+      ),
+    );
+  }, []);
+  const renderView = (item: any) => {
     return (
-      <View>
+      <View style={{paddingHorizontal: vw(3), backgroundColor: '#fbfbfb'}}>
         <TouchableOpacity style={styles.containeer}>
-          <Image style={styles.imageStyle} source={constants.Images.ellipse} />
-          <View style={{marginLeft: vw(10)}}>
+          <Image style={styles.imageStyle} source={{uri: item?.circleImage}} />
+          <View style={{marginLeft: vw(10), flex: 1}}>
             <View>
-              <Text style={styles.buy}>{'Buy Stocks Of Healthcare'}</Text>
+              <Text style={styles.buy}>{item.title}</Text>
             </View>
             <View
               style={{
@@ -48,38 +71,39 @@ const ActiveCircle = () => {
                   marginLeft: vw(5),
                   fontWeight: '500',
                 }}>
-                {'Expiry-20/12/21'}
+                {`Expiry-  ${moment(item?.expiryDate).format('DD/MM/YYYY')}`}
               </Text>
             </View>
           </View>
-          <View style={{marginLeft: vw(30)}}>
-            <Text style={styles.count}>{'20'}</Text>
-            <View style={{flexDirection: 'row', marginTop: vh(7)}}>
-              <Image
-                style={[styles.imageRow, {position: 'absolute', left: 0}]}
-                source={constants.Images.ellipse1}
-              />
-              <Image
-                style={[
-                  styles.imageRow,
-                  {position: 'absolute', left: 10, zIndex: -50},
-                ]}
-                source={constants.Images.ellipse1}
-              />
-              <Image
-                style={[
-                  styles.imageRow,
-                  {position: 'absolute', left: 15, zIndex: -60},
-                ]}
-                source={constants.Images.ellipse}
-              />
-              <Image
-                style={[
-                  styles.imageRow,
-                  {position: 'absolute', left: 20, zIndex: -70},
-                ]}
-                source={constants.Images.ellipse3}
-              />
+          <View style={{flex: 1}}>
+            <View style={{alignSelf: 'flex-end', marginRight: vw(30)}}>
+              <Text style={styles.count}>{item?.member}</Text>
+              <View style={{flexDirection: 'row', marginTop: vh(7)}}>
+                {item && item?.memberImages && item.memberImages.length > 0 && (
+                  <Image
+                    style={[styles.imageRow, {position: 'absolute', left: 0}]}
+                    source={{uri: item.memberImages[0]}}
+                  />
+                )}
+                {item && item?.memberImages && item.memberImages.length > 1 && (
+                  <Image
+                    style={[
+                      styles.imageRow,
+                      {position: 'absolute', left: 10, zIndex: -50},
+                    ]}
+                    source={{uri: item.memberImages[1]}}
+                  />
+                )}
+                {item && item?.memberImages && item.memberImages.length > 2 && (
+                  <Image
+                    style={[
+                      styles.imageRow,
+                      {position: 'absolute', left: 15, zIndex: -60},
+                    ]}
+                    source={{uri: item.memberImages[2]}}
+                  />
+                )}
+              </View>
             </View>
           </View>
         </TouchableOpacity>
@@ -89,17 +113,21 @@ const ActiveCircle = () => {
 
   return (
     <View style={{flex: 1, backgroundColor: '#fbfbfb', paddingTop: vh(20)}}>
-      {renderView()}
-      {renderView()}
-      {renderView()}
+      <ScrollView>
+        <View style={{marginBottom: vh(80)}}>
+          {circle && circle.length > 0 && circle.map(item => renderView(item))}
+        </View>
+      </ScrollView>
       {/* {renderView()}
       {renderView()} */}
 
       <CustomButton
-        isDisabled={false}
         buttonText={'+ Create A Circle'}
         // handleAction={onPressSave}
-        handleAction={() => {}}
+        handleAction={() => {
+          console.log('action');
+          navigation.navigate(constants.Screens.createCircle);
+        }}
         textStyle={styles.textStyle}
         customStyle={[
           styles.saveButtonContainer,
@@ -118,6 +146,7 @@ const styles = StyleSheet.create({
   },
   backButtom: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   iconColor: {
     tintColor: 'white',
@@ -179,10 +208,12 @@ const styles = StyleSheet.create({
   imageStyle: {
     height: vw(38),
     width: vw(38),
+    borderRadius: vw(19),
   },
   imageRow: {
     height: vw(20),
     width: vw(20),
+    borderRadius: vw(19),
   },
   caleder: {
     height: vw(10),

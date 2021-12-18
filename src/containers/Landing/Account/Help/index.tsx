@@ -7,7 +7,6 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import ActionSheet from 'react-native-actionsheet';
 import {vw, vh, normalize} from '../../../../constants/Dimension';
 import Header from '../../../../component/Header';
 import {useNavigation} from '@react-navigation/native';
@@ -18,28 +17,18 @@ import Loader from '../../../../component/Loader/Loader';
 import CustomTextInput from '../../../../component/CustomTextInput';
 import CommonFunctions from '../../../../Utils/CommonFunction';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useDispatch, useSelector} from 'react-redux';
+import {getHelp} from '../../../../modules/Auth';
 
 const Help = () => {
   const navigation = useNavigation();
   const inputRefs = React.useRef<Array<any>>([]);
+  const dispatch = useDispatch();
   const actionSheet: any = React.useRef();
   const [loading, setLoading] = React.useState(false);
-  const [profileImage, setProfileImage] = React.useState('');
+  const [avatar, setavatar] = React.useState('');
 
-  const [userName, setUserName] = React.useState('');
-  const [firstNameError, setFirstNameError] = React.useState<string>('');
-
-  const [lastName, setLastName] = useState<string>('');
-  const [lastNameError, setLastNameError] = useState<string>('');
-
-  const [email, setEmail] = useState<string>('');
-  const [emailError, setEmailError] = useState<string>('');
-
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
-  const [phoneNumberError, setPhoneNumberError] = useState<string>('');
-
-  const [ErrorMsg, setErrorMsg] = useState('');
-  const [Error, setError] = useState(false);
+  const [res, setRes] = useState();
 
   const inputStyles = {
     width: vw(337),
@@ -67,56 +56,25 @@ const Help = () => {
     );
   };
 
-  const handleChange = (type: string, val: any) => {
-    if (type === 'firstName') {
-      const name = CommonFunctions.normalizeName(val);
-      setUserName(name);
-      setFirstNameError(CommonFunctions.validateName(name).msg);
-      console.log(name);
-      console.log(CommonFunctions.validateName(name).msg);
-    } else if (type === 'phone') {
-      let num = val.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '');
-      const mobile = val ? parseInt(CommonFunctions.normalizeSpaces(num)) : '';
-      setPhoneNumber(mobile.toString());
-      setPhoneNumberError(CommonFunctions.validatePhone(mobile).msg);
-    } else if (type === 'email') {
-      setEmail(CommonFunctions.normalizeEmail(val));
-      setEmailError(CommonFunctions.validateEmail(val).msg);
-    } else if (type === 'lastName') {
-      const lastName = CommonFunctions.normalizeName(val);
-      setLastName(lastName);
-      setLastNameError(CommonFunctions.validateLastName(lastName).msg);
-      console.log(lastName);
-      console.log(CommonFunctions.validateLastName(lastName).msg);
-    }
-  };
-
-  const onDonePress = () => {
-    if (!emailError && !firstNameError && !lastNameError && !phoneNumberError) {
-      setError(false);
-    } else {
-      setError(true);
-      if (emailError) {
-        setErrorMsg('Incorrect email, please retry');
-      } else if (firstNameError) {
-        setErrorMsg('Name should be min of 3 characters.');
-      } else if (phoneNumberError) {
-        setErrorMsg('Phone number must contain 10 digits');
-      } else if (lastNameError) {
-        setErrorMsg('Last Name should be min of 3 characters.');
-      }
-    }
-  };
+  React.useEffect(() => {
+    setLoading(true);
+    dispatch(
+      getHelp(
+        (res: any) => {
+          setLoading(false);
+          console.log('res', res);
+          setRes(res);
+        },
+        (error: any) => {
+          setLoading(false);
+        },
+      ),
+    );
+  }, []);
 
   const onRemovePress = () => {
-    setProfileImage('');
+    setavatar('');
   };
-
-  let disabled =
-    phoneNumber.length == 0 ||
-    userName.length == 0 ||
-    lastName.length == 0 ||
-    email.length === 0;
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -125,19 +83,20 @@ const Help = () => {
         <View style={styles.innerContainner}>
           <View style={styles.alignRow}>
             <Image style={styles.iconDesign} source={constants.Images.mail} />
-            <Text style={styles.fontStyle}>{'mycircle@gmail.com'}</Text>
+            <Text style={styles.fontStyle}>{res && res.email}</Text>
           </View>
           <View style={styles.alignRow}>
             <Image style={styles.iconDesign} source={constants.Images.call} />
-            <Text style={styles.fontStyle}>{'123456789'}</Text>
+            <Text style={styles.fontStyle}>{res && res.phone}</Text>
           </View>
           <View style={styles.alignRow}>
-            <Image style={styles.iconDesign} source={constants.Images.location} />
+            <Image
+              style={styles.iconDesign}
+              source={constants.Images.location}
+            />
             <Text
               style={[styles.fontStyle, {fontWeight: '400', color: 'black'}]}>
-              {
-                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut Lorem ipsum .Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy '
-              }
+              {res && res.description}
             </Text>
           </View>
         </View>

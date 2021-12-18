@@ -27,8 +27,8 @@ interface Props {
 
 const ResetPassword = (props: Props) => {
   const navigation = useNavigation();
-  const {email} = props?.route?.params;
-
+  // const {email = ' '} = props?.route?.params;
+  const email="d"
   const dispatch = useDispatch();
   const [ErrorMsg, setErrorMsg] = useState('');
   const [Error, setError] = useState(false);
@@ -48,21 +48,21 @@ const ResetPassword = (props: Props) => {
 
   const onPressSave = () => {
     //navigation.pop(2);
-    dispatch(
-      resetPassword(
-        {
-          email: email,
-          password: newPassword,
-          confirmationcode: code,
-        },
-        () => {
-          navigation.pop(2);
-        },
-        () => {
-          console.log('error callback');
-        },
-      ),
-    );
+    // dispatch(
+    //   resetPassword(
+    //     {
+    //       email: email,
+    //       password: newPassword,
+    //       confirmationcode: code,
+    //     },
+    //     () => {
+    //       navigation.pop(2);
+    //     },
+    //     () => {
+    //       console.log('error callback');
+    //     },
+    //   ),
+    // );
   };
 
   const onBackPress = () => {
@@ -78,21 +78,21 @@ const ResetPassword = (props: Props) => {
   };
 
   const changePassword = () => {
-    dispatch(
-      resetPassword(
-        {
-          email: email,
-          password: newPassword,
-          confirmationcode: code,
-        },
-        () => {
-          navigation.pop(2);
-        },
-        () => {
-          console.log('error callback');
-        },
-      ),
-    );
+    // dispatch(
+    //   resetPassword(
+    //     {
+    //       email: email,
+    //       password: newPassword,
+    //       confirmationcode: code,
+    //     },
+    //     () => {
+    //       navigation.pop(2);
+    //     },
+    //     () => {
+    //       console.log('error callback');
+    //     },
+    //   ),
+    // );
   };
 
   const returnDisableState = () => {
@@ -279,6 +279,7 @@ const styles = StyleSheet.create({
   },
   backButtom: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   iconColor: {
     tintColor: 'white',

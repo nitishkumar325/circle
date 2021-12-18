@@ -15,12 +15,21 @@ import constants from '../../../../constants';
 import CustomButton from '../../../../component/CustomButton';
 import ImagePicker from '../../../../Utils/ImagePickerFn';
 import Loader from '../../../../component/Loader/Loader';
+import {useDispatch, useSelector} from 'react-redux';
+import {upload, updateValues} from '../../../../modules/Auth';
+import Utils from '../../../../Utils';
 
 const EditProfilePicture = () => {
+  const {avatar} = useSelector((state: {Auth: any}) => ({
+    avatar: state.Auth.avatar,
+  }));
   const navigation = useNavigation();
   const actionSheet: any = React.useRef();
   const [loading, setLoading] = React.useState(false);
-  const [profileImage, setProfileImage] = React.useState('');
+  const [profileImg, setProfileImg] = React.useState(avatar);
+  const [localLoader, setLocalLoader] = React.useState(false);
+
+  const dispatch = useDispatch();
 
   const onBackPress = () => {
     navigation.goBack();
@@ -47,15 +56,33 @@ const EditProfilePicture = () => {
     ImagePicker.getCamera(
       (path: any, mimeType: string, fileName: any) => {
         setLoading(false);
-
-        //  const data = new FormData();
-        //  data.append('files', {
-        //    uri: path,
-        //    name: fileName,
-        //    type: mimeType,
-        //  });
         console.log('path', path);
-        setProfileImage(path);
+        setProfileImg(path);
+        const data = new FormData();
+        data.append('file', {
+          uri: path,
+          name: fileName,
+          type: mimeType,
+        });
+        dispatch(
+          upload(
+            data,
+            (response: any) => {
+              setProfileImg(response.data.image.url);
+              dispatch(updateValues('avatar', response.data.image.url));
+              setLocalLoader(false);
+              Utils.CommonFunctions.showSnackbar(
+                response.data.message,
+                'black',
+              );
+            },
+            (Error: any) => {
+              setLocalLoader(false);
+              console.log('error', Error);
+              Utils.CommonFunctions.showSnackbar(Error.data.error, 'black');
+            },
+          ),
+        );
       },
       (err: any) => {
         console.log('====erri', err);
@@ -70,20 +97,32 @@ const EditProfilePicture = () => {
       (path: any, mimeType: string, fileName: any, size: any) => {
         setLoading(false);
         console.log('path', path);
-        setProfileImage(path);
-        //  const data = new FormData();
-        //  data.append('files', {
-        //    uri: path,
-        //    name: fileName,
-        //    type: mimeType,
-        //  });
-        //  props.uploadFileAPI({
-        //    data,
-        //    callback: async (data1: any) => {
-        //      setLoading(false);
-        //      dispatch(authActions.set({profilePicture: data1.fileUrl}, ''));
-        //    },
-        //  });
+        setProfileImg(path);
+        const data = new FormData();
+        data.append('file', {
+          uri: path,
+          name: fileName,
+          type: mimeType,
+        });
+        dispatch(
+          upload(
+            data,
+            (response: any) => {
+              setProfileImg(response.data.image.url);
+              dispatch(updateValues('avatar', response.data.image.url));
+              setLocalLoader(false);
+              Utils.CommonFunctions.showSnackbar(
+                response.data.message,
+                'black',
+              );
+            },
+            (Error: any) => {
+              setLocalLoader(false);
+              console.log('error', Error);
+              Utils.CommonFunctions.showSnackbar(Error.data.error, 'black');
+            },
+          ),
+        );
       },
       () => {
         setLoading(false);
@@ -98,7 +137,8 @@ const EditProfilePicture = () => {
   const onDonePress = () => {};
 
   const onRemovePress = () => {
-    setProfileImage('');
+    setProfileImg('');
+    dispatch(updateValues('avatar', ''));
   };
 
   return (
@@ -106,13 +146,13 @@ const EditProfilePicture = () => {
       <Header renderLeftButton={renderLeftButton} />
       <View style={styles.innerContainner}>
         <View style={styles.profilePicture}>
-          {profileImage === '' ? (
+          {avatar === null ? (
             <Image
               style={styles.image}
               source={constants.Images.ic_placeholder}
             />
           ) : (
-            <Image style={styles.image} source={{uri: profileImage}} />
+            <Image style={styles.image} source={{uri: profileImg}} />
           )}
         </View>
         <Text onPress={onRemovePress} style={styles.removeStyle}>
@@ -192,6 +232,7 @@ const styles = StyleSheet.create({
     height: vw(92),
     width: vw(92),
     borderRadius: vw(92 / 2),
+    backgroundColor: 'grey',
   },
   removeStyle: {
     fontSize: vw(14),

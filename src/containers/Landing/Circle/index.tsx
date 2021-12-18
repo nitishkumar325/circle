@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
   },
   backButtom: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   iconColor: {
     tintColor: 'white',

@@ -13,22 +13,177 @@ export const setLoginBoolean = (status: any) => {
     });
   };
 };
-
-export const setIntialState = () => {
+export const setLoginInfo = (payload: any) => {
   return (dispatch: Function) => {
     dispatch({
-      type: Actions.SET_INITIAL,
-      payload: {},
+      type: Actions.SET_LOGI_INFO,
+      payload: payload,
     });
   };
 };
 
+export const updateValues = (key: string, value: any) => {
+  return (dispatch: Function) => {
+    dispatch({
+      type: Actions.SET,
+      payload: {
+        [key]: value,
+      },
+    });
+  };
+};
+
+export const setIntialState = () => {
+  return (dispatch: Function) => {
+    dispatch({
+      type: Actions.RESET_STORE,
+    });
+  };
+};
+
+export const resetStore = () => {
+  return {
+    type: Actions.RESET_STORE,
+  };
+};
 export const setLocalDetail = (userDetail: any) => {
   return (dispatch: Function) => {
     dispatch({
       type: Actions.USER_DETAIL,
       payload: userDetail,
     });
+  };
+};
+
+export const upload =
+  (data: any, callback: Function, ErrorCallback: Function) => async () => {
+    utils.Services.postApiCall(
+      utils.EndPoint.mediaUpload,
+      data,
+      (res: any) => {
+        callback(res);
+      },
+      (error: any) => {
+        ErrorCallback(error);
+      },
+    );
+  };
+
+export const getHelp = (callback?: any, Fail?: Function) => {
+  return (dispatch: any, getState: Function) => {
+    dispatch({
+      type: Actions.Loder,
+      payload: {
+        authLoder: true,
+      },
+    });
+    utils.Services.getApiCall(
+      utils.EndPoint.getHelp,
+      '',
+      (res: any) => {
+        console.log('res', res);
+        if (res.data.status === 200) {
+          callback(res.data.info);
+        } else {
+          let message = res.data.message;
+          utils.CommonFunctions.showSnackbar(message, constants.Colors.black);
+        }
+      },
+      (err: any) => {
+        console.log('err', err);
+        Fail && Fail();
+        let message = err.data.error;
+        utils.CommonFunctions.showSnackbar(message, constants.Colors.black);
+      },
+    );
+  };
+};
+export const getCircle = (callback?: any, Fail?: Function) => {
+  return (dispatch: any, getState: Function) => {
+    dispatch({
+      type: Actions.Loder,
+      payload: {
+        authLoder: true,
+      },
+    });
+    utils.Services.getApiCall(
+      utils.EndPoint.getCircle(43),
+      '',
+      (res: any) => {
+        console.log('res', res);
+        if (res.data.status === 200) {
+          callback(res.data.circles);
+        } else {
+          let message = res.data.message;
+          utils.CommonFunctions.showSnackbar(message, constants.Colors.black);
+        }
+      },
+      (err: any) => {
+        console.log('err', err);
+        Fail && Fail();
+        let message = err.data.error;
+        utils.CommonFunctions.showSnackbar(message, constants.Colors.black);
+      },
+    );
+  };
+};
+export const getServices = (callback?: any, Fail?: Function) => {
+  return (dispatch: any, getState: Function) => {
+    dispatch({
+      type: Actions.Loder,
+      payload: {
+        authLoder: true,
+      },
+    });
+    utils.Services.getApiCall(
+      utils.EndPoint.getServices,
+      '',
+      (res: any) => {
+        console.log('res', res);
+        if (res.data.status === 200) {
+          callback(res.data.services);
+        } else {
+          let message = res.data.message;
+          utils.CommonFunctions.showSnackbar(message, constants.Colors.black);
+        }
+      },
+      (err: any) => {
+        console.log('err', err);
+        Fail && Fail();
+        let message = err.data.error;
+        utils.CommonFunctions.showSnackbar(message, constants.Colors.black);
+      },
+    );
+  };
+};
+
+export const getTheme = (callback?: any, Fail?: Function) => {
+  return (dispatch: any, getState: Function) => {
+    dispatch({
+      type: Actions.Loder,
+      payload: {
+        authLoder: true,
+      },
+    });
+    utils.Services.getApiCall(
+      utils.EndPoint.getTheme,
+      '',
+      (res: any) => {
+        console.log('res', res);
+        if (res.data.status === 200) {
+          callback(res.data.themes);
+        } else {
+          let message = res.data.message;
+          utils.CommonFunctions.showSnackbar(message, constants.Colors.black);
+        }
+      },
+      (err: any) => {
+        console.log('err', err);
+        Fail && Fail();
+        let message = err.data.error;
+        utils.CommonFunctions.showSnackbar(message, constants.Colors.black);
+      },
+    );
   };
 };
 
@@ -89,9 +244,57 @@ export const userLogin = (params: Object, callback?: any, Fail?: Function) => {
         ...params,
       },
       (res: any) => {
+        let data = res?.data.data;
+        if (res.data.status === 200) {
+          callback(data.user);
+          dispatch({
+            type: Actions.Loder,
+            payload: {
+              authLoder: false,
+            },
+          });
+        } else {
+          // Fail && Fail(res);
+          // utils.CommonFunctions.showSnackbar('error', constants.Colors.black);
+        }
+      },
+      (err: any) => {
+        console.log('errro', err);
+        dispatch({
+          type: Actions.Loder,
+          payload: {
+            authLoder: false,
+          },
+        });
+        Fail && Fail(err);
+        // utils.CommonFunctions.showSnackbar('error', constants.Colors.black);
+      },
+    );
+  };
+};
+
+export const createCircle = (
+  params: Object,
+  callback?: any,
+  Fail?: Function,
+) => {
+  return (dispatch: any, getState: Function) => {
+    dispatch({
+      type: Actions.Loder,
+      payload: {
+        authLoder: true,
+      },
+    });
+    utils.Services.postApiCall(
+      utils.EndPoint.createCirlce,
+      {
+        ...params,
+      },
+      (res: any) => {
+        console.log('res', res);
         let data = res?.data;
-        if (data.status === 200) {
-          callback();
+        if (res.status === 200) {
+          callback(data);
           dispatch({
             type: Actions.Loder,
             payload: {

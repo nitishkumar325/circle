@@ -28,6 +28,7 @@ export default StyleSheet.create({
     fontSize: normalize(14),
     marginTop: normalize(13),
     marginBottom: normalize(8),
+    color: 'black',
   },
   passwordIconContainer: {
     width: vw(20),
