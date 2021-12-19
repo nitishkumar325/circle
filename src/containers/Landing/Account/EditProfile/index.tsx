@@ -22,8 +22,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import Utils from '../../../../Utils';
 
 const EditProfile = () => {
-  const {avatar} = useSelector((state: {Auth: any}) => ({
+  const {avatar, name, email, phone} = useSelector((state: {Auth: any}) => ({
     avatar: state.Auth.avatar,
+    name: state.Auth.name,
+    email: state.Auth.email,
+    phone: state.Auth.phone,
   }));
   const navigation = useNavigation();
   const inputRefs = React.useRef<Array<any>>([]);
@@ -31,16 +34,16 @@ const EditProfile = () => {
   const [loading, setLoading] = React.useState(false);
   const [profileImg, setProfileImg] = React.useState(avatar);
 
-  const [userName, setUserName] = React.useState('');
+  const [userName, setUserName] = React.useState(name.split(' ')[0]);
   const [firstNameError, setFirstNameError] = React.useState<string>('');
 
-  const [lastName, setLastName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>(name.split(' ')[1]);
   const [lastNameError, setLastNameError] = useState<string>('');
 
-  const [email, setEmail] = useState<string>('');
+  const [useremail, setuserEmail] = useState<string>(email);
   const [emailError, setEmailError] = useState<string>('');
 
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const [phoneNumber, setPhoneNumber] = useState<string>(phone);
   const [phoneNumberError, setPhoneNumberError] = useState<string>('');
 
   const [ErrorMsg, setErrorMsg] = useState('');
@@ -85,7 +88,7 @@ const EditProfile = () => {
       setPhoneNumber(mobile.toString());
       setPhoneNumberError(CommonFunctions.validatePhone(mobile).msg);
     } else if (type === 'email') {
-      setEmail(CommonFunctions.normalizeEmail(val));
+      setuserEmail(CommonFunctions.normalizeEmail(val));
       setEmailError(CommonFunctions.validateEmail(val).msg);
     } else if (type === 'lastName') {
       const lastName = CommonFunctions.normalizeName(val);
@@ -187,7 +190,7 @@ const EditProfile = () => {
 
           <CustomTextInput
             ref={ref => (inputRefs.current[2] = ref)}
-            value={email}
+            value={useremail}
             starStatus
             labelStyle={{color: 'black', fontWeight: '600'}}
             container={inputStyles}
@@ -197,6 +200,7 @@ const EditProfile = () => {
             label={'Email'}
             keyboardType="email-address"
             fieldName="email"
+            editable={true}
             onChangeText={(type: string, val: string) =>
               handleChange(type, val)
             }
@@ -208,6 +212,7 @@ const EditProfile = () => {
             value={phoneNumber}
             autoCapitalize="sentences"
             container={inputStyles}
+            editable={true}
             placeholder={'Mobile Number'}
             labelStyle={{color: 'black', fontWeight: '600'}}
             label={'Enter Mobile Number'}

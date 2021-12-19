@@ -349,37 +349,37 @@ const Home = () => {
 
   const apiCall = () => {
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      Utils.CommonFunctions.showSnackbar(
-        'Circle Created successfully',
-        'black',
-      );
-      navigation.goBack();
-    }, 3000);
-    // let data = {
-    //   title: circle,
-    //   description: bio,
-    //   themeId: selectedTheme?.id,
-    //   expiryDate: new Date(date).getTime(),
-    //   circleImage: CircleImage,
-    //   services: getService(selectedService),
-    //   members: getData(contact),
-    // };
-    // console.log('data', data);
-    // dispatch(
-    //   createCircle(
-    //     data,
-    //     (response: any) => {
-    //       console.log('res', response);
-    //       Utils.CommonFunctions.showSnackbar(response.message, 'black');
-    //       navigation.goBack();
-    //     },
-    //     (Error: any) => {
-    //       Utils.CommonFunctions.showSnackbar(Error.data.error, 'black');
-    //     },
-    //   ),
-    // );
+    // setTimeout(() => {
+    //   setLoading(false);
+    //   Utils.CommonFunctions.showSnackbar(
+    //     'Circle Created successfully',
+    //     'black',
+    //   );
+    //   navigation.goBack();
+    // }, 3000);
+    let data = {
+      title: circle,
+      description: bio,
+      themeId: selectedTheme?.id,
+      expiryDate: new Date(date).getTime(),
+      circleImage: CircleImage,
+      services: getService(selectedService),
+      members: getData(contact),
+    };
+    console.log('data', data);
+    dispatch(
+      createCircle(
+        data,
+        (response: any) => {
+          console.log('res', response);
+          Utils.CommonFunctions.showSnackbar(response.message, 'black');
+          navigation.goBack();
+        },
+        (Error: any) => {
+          Utils.CommonFunctions.showSnackbar(Error.data.error, 'black');
+        },
+      ),
+    );
   };
 
   console.log('circle', circle);
@@ -434,7 +434,7 @@ const Home = () => {
               fontWeight: 'bold',
               color: 'black',
             }}>
-            {'integration '}
+            {'Integration '}
           </Text>
 
           {service &&

@@ -14,11 +14,18 @@ import {useNavigation} from '@react-navigation/native';
 import constants from '../../../constants';
 import CustomTextInput from '../../../component/CustomTextInput';
 import CustomButton from '../../../component/CustomButton';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getCircle} from '../../../modules/Auth';
 import moment from 'moment';
+import {useFocusEffect} from '@react-navigation/native';
+import Loader from '../../../component/Loader/Loader';
 
 const Home = () => {
+  const {id} = useSelector((state: {Auth: any}) => ({
+    id: state.Auth.id,
+  }));
+  const [loading, setLoading] = React.useState(false);
+
   const dispatch = useDispatch();
   const [circle, setCircle] = React.useState([]);
   const navigation = useNavigation();
@@ -44,19 +51,26 @@ const Home = () => {
     );
   };
 
-  React.useEffect(() => {
-    dispatch(
-      getCircle(
-        (res: any) => {
-          setCircle(res);
-          console.log('res', res);
-        },
-        (err: any) => {
-          console.log('err', err);
-        },
-      ),
-    );
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      setLoading(true);
+      dispatch(
+        getCircle(
+          id,
+          (res: any) => {
+            setLoading(false);
+            setCircle(res);
+          },
+          (err: any) => {
+            setLoading(false);
+          },
+        ),
+      );
+      return () => {};
+    }, []),
+  );
+
+  React.useEffect(() => {}, []);
 
   const renderView = (item: any) => {
     return (
@@ -171,6 +185,7 @@ const Home = () => {
           ]}
         />
       </View>
+      {/* {loading && <Loader />} */}
     </SafeAreaView>
   );
 };

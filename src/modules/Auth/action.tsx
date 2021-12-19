@@ -98,7 +98,7 @@ export const getHelp = (callback?: any, Fail?: Function) => {
     );
   };
 };
-export const getCircle = (callback?: any, Fail?: Function) => {
+export const getCircle = (id: any, callback?: any, Fail?: Function) => {
   return (dispatch: any, getState: Function) => {
     dispatch({
       type: Actions.Loder,
@@ -107,7 +107,7 @@ export const getCircle = (callback?: any, Fail?: Function) => {
       },
     });
     utils.Services.getApiCall(
-      utils.EndPoint.getCircle(43),
+      utils.EndPoint.getCircle(id),
       '',
       (res: any) => {
         console.log('res', res);

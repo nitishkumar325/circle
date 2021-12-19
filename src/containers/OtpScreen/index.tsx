@@ -43,7 +43,7 @@ const OTPScreen = (props: Props) => {
     setLoder(true);
     console.log('data', email, useCode);
     dispatch(setLoginBoolean(true));
-    Router.resetNew(navigation, constants.Screens.Landing, {
+    Router.resetNew(navigation, constants.Screens.Login, {
       type: 'SIGNUP',
     });
     // dispatch(

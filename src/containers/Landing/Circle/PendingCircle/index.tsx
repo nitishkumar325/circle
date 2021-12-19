@@ -15,14 +15,42 @@ import constants from '../../../../constants';
 import CustomTextInput from '../../../../component/CustomTextInput';
 import CustomButton from '../../../../component/CustomButton';
 import {Screen} from 'react-native-screens';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getCircle} from '../../../../modules/Auth';
 import moment from 'moment';
+import {useFocusEffect} from '@react-navigation/native';
+import Loader from '../../../../component/Loader/Loader';
+
 
 const PendingCircle = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [circle, setCircle] = React.useState([]);
+    const [loading, setLoading] = React.useState(false);
+
+    const {id} = useSelector((state: {Auth: any}) => ({
+      id: state.Auth.id,
+    }));
+
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setLoading(true);
+      dispatch(
+        getCircle(
+          id,
+          (res: any) => {
+            setLoading(false);
+            setCircle(res);
+          },
+          (err: any) => {
+            setLoading(false);
+          },
+        ),
+      );
+      return () => {};
+    }, []),
+  );
 
   const inputStyles = {
     width: vw(320),
@@ -32,17 +60,7 @@ const PendingCircle = () => {
   };
 
   React.useEffect(() => {
-    dispatch(
-      getCircle(
-        (res: any) => {
-          setCircle(res);
-          console.log('res', res);
-        },
-        (err: any) => {
-          console.log('err', err);
-        },
-      ),
-    );
+
   }, []);
   const renderView = (item: any) => {
     return (
@@ -134,6 +152,7 @@ const PendingCircle = () => {
           {backgroundColor: constants.Colors.appButtonColor},
         ]}
       />
+      {/* {loading && <Loader />} */}
     </View>
   );
 };
