@@ -51,8 +51,9 @@ const Home = () => {
   const [CircleImage, setCircleImage] = React.useState('');
   const [contact, setSelectedContact] = React.useState<any>();
 
-  const {phone} = useSelector((state: {Auth: any}) => ({
+  const {phone, authId} = useSelector((state: {Auth: any}) => ({
     phone: state.Auth.phone,
+    authId: state.Auth.authId,
   }));
 
   const BioRef: any = React.createRef();
@@ -105,7 +106,7 @@ const Home = () => {
           style={[styles.iconColor, {height: vw(17), width: vw(17)}]}
           source={constants.Images.back}
         />
-        <Text style={styles.headerTextStyle}>{'Create Circles'}</Text>
+        <Text style={styles.headerTextStyle}>{'Create Circle'}</Text>
       </TouchableOpacity>
     );
   };
@@ -330,7 +331,7 @@ const Home = () => {
       {
         phoneNumber: phone,
         status: 'ACCEPT',
-        authId: new Date().getTime(),
+        authId: authId,
         owner: true,
       },
     ];
@@ -415,7 +416,7 @@ const Home = () => {
             editable={true}
             onIconPress={onSelect}
             labelStyle={{fontWeight: '600', color: 'black'}}
-            label={'Enter Theme'}
+            label={'Select theme'}
             fieldName="circlename"
             keyboardType="default"
             renderExtra={renderExtra}

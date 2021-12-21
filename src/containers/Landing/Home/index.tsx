@@ -173,7 +173,7 @@ const Home = () => {
 
         <CustomButton
           isDisabled={false}
-          buttonText={'+ Create A Circle'}
+          buttonText={'+ Create a Circle'}
           // handleAction={onPressSave}
           handleAction={() => {
             navigation.navigate(constants.Screens.createCircle);

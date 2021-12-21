@@ -142,7 +142,7 @@ const ActiveCircle = () => {
       {renderView()} */}
 
       <CustomButton
-        buttonText={'+ Create A Circle'}
+        buttonText={'+ Create a Circle'}
         // handleAction={onPressSave}
         handleAction={() => {
           console.log('action');
