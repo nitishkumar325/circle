@@ -9,4 +9,5 @@ export default {
   createCirlce: '/api/circle/create',
   getHelp: '/api/customer/help/info',
   getCircle: (id: any) => `/api/circle/get/${id}`,
+  editProfile: '/api/customer/profile/update',
 };

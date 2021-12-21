@@ -187,7 +187,7 @@ const Login = () => {
             </View>
             <CustomButton
               isDisabled={disabled}
-              buttonText={'Sign'}
+              buttonText={'Sign In'}
               handleAction={onPressSave}
               customStyle={[
                 styles.saveButtonContainer,

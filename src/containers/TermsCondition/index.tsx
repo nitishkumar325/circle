@@ -28,9 +28,9 @@ interface Props {
 
 const OTPScreen = (props: Props) => {
   const {onPressSave} = props.route.params;
-  // const {authLoder} = useSelector((state: {Auth: any}) => ({
-  //   authLoder: state.Auth.authLoder,
-  // }));
+  const {authLoder} = useSelector((state: {Auth: any}) => ({
+    authLoder: state.Auth.authLoder,
+  }));
   const [loder, setLoder] = React.useState(false);
 
   const dispatch = useDispatch();
@@ -95,7 +95,7 @@ const OTPScreen = (props: Props) => {
         </View>
       </ScrollView>
 
-      {loder && <Loader />}
+      {authLoder && <Loader />}
     </SafeAreaView>
   );
 };
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: vw(14),
     fontWeight: '600',
-    color:'black'
+    color: 'black',
   },
   backButtom: {
     flexDirection: 'row',

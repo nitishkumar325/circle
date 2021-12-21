@@ -20,14 +20,27 @@ import CommonFunctions from '../../../../Utils/CommonFunction';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useDispatch, useSelector} from 'react-redux';
 import Utils from '../../../../Utils';
+import {
+  upload,
+  updateValues,
+  editDetail,
+  setLoginInfo,
+} from '../../../../modules/Auth';
 
 const EditProfile = () => {
-  const {avatar, name, email, phone} = useSelector((state: {Auth: any}) => ({
-    avatar: state.Auth.avatar,
-    name: state.Auth.name,
-    email: state.Auth.email,
-    phone: state.Auth.phone,
-  }));
+  const dispatch = useDispatch();
+
+  const {avatar, name, email, phone, authId, id} = useSelector(
+    (state: {Auth: any}) => ({
+      avatar: state.Auth.avatar,
+      name: state.Auth.name,
+      email: state.Auth.email,
+      phone: state.Auth.phone,
+      authId: state.Auth.authId,
+      id: state.Auth.id,
+    }),
+  );
+
   const navigation = useNavigation();
   const inputRefs = React.useRef<Array<any>>([]);
   const actionSheet: any = React.useRef();
@@ -48,6 +61,7 @@ const EditProfile = () => {
 
   const [ErrorMsg, setErrorMsg] = useState('');
   const [Error, setError] = useState(false);
+  const [localLoader, setLocalLoader] = React.useState(false);
 
   const inputStyles = {
     width: vw(337),
@@ -100,11 +114,33 @@ const EditProfile = () => {
   };
 
   const ApiCall = () => {
+    let data = {
+      authId,
+      id,
+      name: `${userName}${' '}${lastName}`,
+      username: `${userName}${' '}${lastName}${'_'}`,
+      avatar: profileImg,
+    };
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      Utils.CommonFunctions.showSnackbar('something went wrong', 'black');
-    }, 3000);
+    dispatch(
+      editDetail(
+        data,
+        (response: any) => {
+          setLoading(false);
+          Utils.CommonFunctions.showSnackbar(response.message, 'black');
+          dispatch(setLoginInfo(data)); // locally update info
+          navigation.goBack();
+        },
+        (error: any) => {
+          setLoading(false);
+          console.log('error', error);
+        },
+      ),
+    );
+    // setTimeout(() => {
+    //   setLoading(false);
+    //   Utils.CommonFunctions.showSnackbar('something went wrong', 'black');
+    // }, 3000);
   };
 
   const onDonePress = () => {
@@ -124,11 +160,98 @@ const EditProfile = () => {
     }
   };
 
-  const onRemovePress = () => {
-    setProfileImg('');
+  const pickCamera = async () => {
+    setLoading(true);
+    ImagePicker.getCamera(
+      (path: any, mimeType: string, fileName: any) => {
+        setLoading(false);
+        console.log('path', path);
+        setProfileImg(path);
+        const data = new FormData();
+        data.append('file', {
+          uri: path,
+          name: fileName,
+          type: mimeType,
+        });
+        dispatch(
+          upload(
+            data,
+            (response: any) => {
+              setProfileImg(response.data.image.url);
+              dispatch(updateValues('avatar', response.data.image.url));
+              setLocalLoader(false);
+              Utils.CommonFunctions.showSnackbar(
+                response.data.message,
+                'black',
+              );
+            },
+            (Error: any) => {
+              setLocalLoader(false);
+              console.log('error', Error);
+              Utils.CommonFunctions.showSnackbar(Error.data.error, 'black');
+            },
+          ),
+        );
+      },
+      (err: any) => {
+        console.log('====erri', err);
+        setLoading(false);
+      },
+    );
   };
 
-  console.log('profileimg', profileImg);
+  const pickImage = () => {
+    setLoading(true);
+    ImagePicker.getSinglePic(
+      (path: any, mimeType: string, fileName: any, size: any) => {
+        setLoading(false);
+        console.log('path', path);
+        setProfileImg(path);
+        const data = new FormData();
+        data.append('file', {
+          uri: path,
+          name: fileName,
+          type: mimeType,
+        });
+        dispatch(
+          upload(
+            data,
+            (response: any) => {
+              setProfileImg(response.data.image.url);
+              dispatch(updateValues('avatar', response.data.image.url));
+              setLocalLoader(false);
+              Utils.CommonFunctions.showSnackbar(
+                response.data.message,
+                'black',
+              );
+            },
+            (Error: any) => {
+              setLocalLoader(false);
+              console.log('error', Error);
+              Utils.CommonFunctions.showSnackbar(Error.data.error, 'black');
+            },
+          ),
+        );
+      },
+      () => {
+        setLoading(false);
+      },
+    );
+  };
+
+  const onImagePress = () => {
+    handleOpenImagePicker();
+  };
+
+  const onClickAction = () => {
+    if (profileImg) {
+      setProfileImg('');
+      dispatch(updateValues('avatar', ''));
+    } else {
+      handleOpenImagePicker();
+    }
+  };
+
   let disabled =
     phoneNumber.length == 0 ||
     userName.length == 0 ||
@@ -141,16 +264,18 @@ const EditProfile = () => {
       <KeyboardAwareScrollView>
         <View style={styles.innerContainner}>
           <View style={styles.profilePicture}>
-            {profileImg === null ? (
-              <Image
-                style={styles.image}
-                source={constants.Images.ic_placeholder}
-              />
+            {!profileImg ? (
+              <TouchableOpacity>
+                <Image
+                  style={styles.image}
+                  source={constants.Images.ic_placeholder}
+                />
+              </TouchableOpacity>
             ) : (
-              <Image style={styles.image} source={{uri: profileImg}} />
+              <Image style={[styles.image]} source={{uri: profileImg}} />
             )}
-            <Text onPress={onRemovePress} style={styles.removeStyle}>
-              {'Remove'}
+            <Text onPress={onClickAction} style={styles.removeStyle}>
+              {profileImg ? 'Remove' : 'Change Photo'}
             </Text>
           </View>
           <CustomTextInput
@@ -246,6 +371,19 @@ const EditProfile = () => {
           {backgroundColor: disabled ? 'grey' : '#6a9589'},
         ]}
       />
+
+      <ActionSheet
+        ref={actionSheet}
+        title={'Upload Image From'}
+        options={['Camera', 'Gallery', 'Cancel']}
+        cancelButtonIndex={2}
+        onPress={(index: number) => {
+          if (index == 2) {
+          } else {
+            index === 0 ? pickCamera() : pickImage();
+          }
+        }}
+      />
       {loading && <Loader />}
     </SafeAreaView>
   );
@@ -286,6 +424,7 @@ const styles = StyleSheet.create({
     height: vw(72),
     width: vw(72),
     borderRadius: vw(72 / 2),
+    backgroundColor: 'grey',
   },
   removeStyle: {
     fontSize: vw(14),
@@ -298,7 +437,6 @@ const styles = StyleSheet.create({
     fontSize: vw(14),
     fontWeight: '400',
     marginTop: vh(33),
-    
   },
   dottedView: {
     borderStyle: 'dotted',
@@ -365,6 +503,23 @@ const styles = StyleSheet.create({
     marginLeft: vw(10),
     fontSize: vw(14),
     width: vw(260),
+  },
+  appGreenCircle: {
+    height: vw(19),
+    width: vw(19),
+    backgroundColor: constants.Colors.appButtonColor,
+    borderRadius: vw(9),
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: vw(5),
+    position: 'absolute',
+    bottom: 10,
+    right: 0,
+  },
+  pencilWhite: {
+    tintColor: 'white',
+    height: vw(8),
+    width: vw(8),
   },
 });
 

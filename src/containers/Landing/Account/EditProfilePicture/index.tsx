@@ -134,7 +134,9 @@ const EditProfilePicture = () => {
     handleOpenImagePicker();
   };
 
-  const onDonePress = () => {};
+  const onDonePress = () => {
+    navigation.goBack();
+  };
 
   const onRemovePress = () => {
     setProfileImg('');

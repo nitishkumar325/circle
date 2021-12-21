@@ -24,6 +24,7 @@ import Modal from '../../component/Modal';
 import Utils from '../../Utils';
 import {useDispatch} from 'react-redux';
 import {setLocalDetail} from '../../modules/Auth';
+import * as Actions from './../../modules/Auth/types';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -126,7 +127,7 @@ const Login = () => {
         setIsErrorModel(true);
         // CommonFunctions.singleButton('Invalid phone number', '', () => {});
       } else if (confirmPassword !== password) {
-        setErrorMsg('Password and confirm Password should be same ');
+        setErrorMsg('Password mis-match');
         setIsErrorModel(true);
         // CommonFunctions.singleButton(
         //   'Password and confirm should be same ',
@@ -160,7 +161,12 @@ const Login = () => {
   };
   const onSubmitFormHandler = () => {
     console.log('callcall');
-    setLoder(true);
+    dispatch({
+      type: Actions.Loder,
+      payload: {
+        authLoder: true,
+      },
+    });
     axios({
       method: 'POST',
       url: 'http://3.7.240.41:8080/api/auth/signup',
@@ -174,8 +180,13 @@ const Login = () => {
     })
       .then(response => {
         console.log('resp', response);
-        setLoder(false);
-        if (response.data.status === 201) {
+        dispatch({
+          type: Actions.Loder,
+          payload: {
+            authLoder: false,
+          },
+        });
+        if (response.data.status === 200) {
           dispatch(
             setLocalDetail({
               name: `${userName}${' '}${lastName}`,
@@ -190,13 +201,22 @@ const Login = () => {
             });
           }, 500);
         } else {
-           Utils.CommonFunctions.showSnackbar(
-             response.data.message,
-             'black',
-           );
+          dispatch({
+            type: Actions.Loder,
+            payload: {
+              authLoder: false,
+            },
+          });
+          Utils.CommonFunctions.showSnackbar(response.data.message, 'black');
         }
       })
       .catch((Error: any) => {
+        dispatch({
+          type: Actions.Loder,
+          payload: {
+            authLoder: false,
+          },
+        });
         console.log('qdjqwhkdkq', Error.response);
         setLoder(false);
         console.log('===error', Error.response.data.errors[0].defaultMessage);

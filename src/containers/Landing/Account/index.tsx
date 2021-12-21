@@ -16,6 +16,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setIntialState, setLoginBoolean} from '../../../modules/Auth';
 import Router from '../../../navigator/routes';
 import Utils from '../../../Utils';
+import Screens from '../../../constants/Screens';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -70,10 +71,10 @@ const Home = () => {
         {
           text: 'OK',
           onPress: () => {
-                dispatch(setIntialState());
-                Router.resetNew(navigation, constants.Screens.Login, {
-                  type: 'Login',
-                });
+            dispatch(setIntialState());
+            Router.resetNew(navigation, constants.Screens.Login, {
+              type: 'Login',
+            });
           },
         },
       ],
@@ -160,14 +161,18 @@ const Home = () => {
             <Text numberOfLines={1} style={styles.userName}>
               {name?.length != '' ? name : 'Jhon Dhoe'}
             </Text>
-            <View style={styles.appGreenCircle}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(Screens.EditProfile);
+              }}
+              style={styles.appGreenCircle}>
               <Image
                 style={styles.pencilWhite}
                 source={constants.Images.app_Pencil}
               />
-            </View>
+            </TouchableOpacity>
           </View>
-          <Text style={styles.userEmail}>
+          <Text numberOfLines={1} style={styles.userEmail}>
             {email?.length != '' ? email : 'jhon.doe@gmail.com'}
           </Text>
           <Text style={styles.userEmail}>

@@ -273,6 +273,50 @@ export const userLogin = (params: Object, callback?: any, Fail?: Function) => {
   };
 };
 
+export const editDetail = (params: Object, callback?: any, Fail?: Function) => {
+  return (dispatch: any, getState: Function) => {
+    dispatch({
+      type: Actions.Loder,
+      payload: {
+        authLoder: true,
+      },
+    });
+    utils.Services.postApiCall(
+      utils.EndPoint.editProfile,
+      {
+        ...params,
+      },
+      (res: any) => {
+        console.log('res', res);
+        let data = res?.data;
+        if (res.data.status === 200) {
+          callback(data);
+          dispatch({
+            type: Actions.Loder,
+            payload: {
+              authLoder: false,
+            },
+          });
+        } else {
+          // Fail && Fail(res);
+          utils.CommonFunctions.showSnackbar('error', constants.Colors.black);
+        }
+      },
+      (err: any) => {
+        console.log('errro', err);
+        dispatch({
+          type: Actions.Loder,
+          payload: {
+            authLoder: false,
+          },
+        });
+        Fail && Fail();
+        utils.CommonFunctions.showSnackbar('error', constants.Colors.black);
+      },
+    );
+  };
+};
+
 export const createCircle = (
   params: Object,
   callback?: any,

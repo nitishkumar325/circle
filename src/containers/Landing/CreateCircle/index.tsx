@@ -484,6 +484,13 @@ const Home = () => {
               setBio(val);
               // dispatch(updateBIO(val));
             }}
+            labelStyle={{
+              fontSize: vw(14),
+              marginTop: vw(13),
+              marginBottom: vw(8),
+              fontWeight: 'bold',
+              color: 'black',
+            }}
             keyboardType={'ascii-capable'}
             returnKeyType={'next'}
             placeholder={'Description'}
