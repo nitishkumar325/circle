@@ -21,10 +21,7 @@ import moment from 'moment';
 import {useFocusEffect} from '@react-navigation/native';
 import Loader from '../../../../component/Loader/Loader';
 
-
-
 const ActiveCircle = () => {
-
   const {id} = useSelector((state: {Auth: any}) => ({
     id: state.Auth.id,
   }));
@@ -34,28 +31,26 @@ const ActiveCircle = () => {
   const dispatch = useDispatch();
   const [circle, setCircle] = React.useState([]);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      setLoading(true);
+      dispatch(
+        getCircle(
+          id,
+          (res: any) => {
+            setLoading(false);
+            setCircle(res);
+          },
+          (err: any) => {
+            setLoading(false);
+          },
+        ),
+      );
+      return () => {};
+    }, []),
+  );
 
-
- useFocusEffect(
-   React.useCallback(() => {
-     setLoading(true);
-     dispatch(
-       getCircle(
-         id,
-         (res: any) => {
-           setLoading(false);
-           setCircle(res);
-         },
-         (err: any) => {
-           setLoading(false);
-         },
-       ),
-     );
-     return () => {};
-   }, []),
- );
-
-    React.useEffect(() => {}, []);
+  React.useEffect(() => {}, []);
 
   const inputStyles = {
     width: vw(320),
@@ -142,7 +137,7 @@ const ActiveCircle = () => {
       {renderView()} */}
 
       <CustomButton
-        buttonText={'+ Create a Circle'}
+        buttonText={'+ Create A Circle'}
         // handleAction={onPressSave}
         handleAction={() => {
           console.log('action');

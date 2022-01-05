@@ -151,7 +151,7 @@ const Home = () => {
           autoCapitalize="sentences"
           container={inputStyles}
           labelStyle={{color: 'white', fontWeight: '600'}}
-          label={'Search Circles'}
+          label={'Search circle'}
           fieldName="accountNumber"
           keyboardType="default"
           icon={constants.Images.searchIcon}
@@ -173,7 +173,7 @@ const Home = () => {
 
         <CustomButton
           isDisabled={false}
-          buttonText={'+ Create a Circle'}
+          buttonText={'+ Create A Circle'}
           // handleAction={onPressSave}
           handleAction={() => {
             navigation.navigate(constants.Screens.createCircle);
