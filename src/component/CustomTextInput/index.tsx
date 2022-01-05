@@ -65,11 +65,15 @@ const CustomTextInput = React.forwardRef((props: Props, ref: any) => {
   const [secureTextEntry, setSecureTextEntry] = useState(props.secureTextEntry);
 
   useEffect(() => {
-    if (!props.showSecureTextEntry) setSecureTextEntry(props.secureTextEntry);
+    if (!props.showSecureTextEntry) {
+      setSecureTextEntry(props.secureTextEntry);
+    }
   }, []);
 
   const handleOnSubmitEditing = () => {
-    if (props.onSubmitEditing) props.onSubmitEditing();
+    if (props.onSubmitEditing) {
+      props.onSubmitEditing();
+    }
   };
   const removeEmojis = (str: string) => {
     const regex =
@@ -135,7 +139,7 @@ const CustomTextInput = React.forwardRef((props: Props, ref: any) => {
             style={[iconStyle]}
             onPress={() => props.onIconPress && props.onIconPress()}>
             <Image
-              style={{height: vw(15), width: vw(15)}}
+              style={{height: vw(15), width: vw(15), tintColor: 'black'}}
               resizeMethod="resize"
               source={props.icon}
               resizeMode="contain"
@@ -227,7 +231,7 @@ CustomTextInput.defaultProps = {
   onIconPress: () => {},
   // @ts-ignore
   keyboardType: 'default',
-showSecureTextEntry: false,
+  showSecureTextEntry: false,
   hidePasswordToggle: false,
   onSubmitEditing: () => {},
   isCountEnable: false,

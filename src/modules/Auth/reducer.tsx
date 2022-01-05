@@ -7,6 +7,8 @@ const initialState = {
   phone: '',
   username: '',
   avatar: '',
+  firstname: '',
+  lastname: '',
 };
 
 const AuthReducer = (state = initialState, action: any) => {

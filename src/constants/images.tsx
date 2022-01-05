@@ -37,4 +37,5 @@ export default {
   delete: require('../assets/Images/delete_icon.png'),
   crossCirlce: require('../assets/Images/crossCircle.png'),
   icon_tick: require('../assets/Images/icon_tick.png'),
+  search_icon: require('../assets/Images/search_icon.png'),
 };

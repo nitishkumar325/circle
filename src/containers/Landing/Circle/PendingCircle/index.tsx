@@ -21,17 +21,15 @@ import moment from 'moment';
 import {useFocusEffect} from '@react-navigation/native';
 import Loader from '../../../../component/Loader/Loader';
 
-
 const PendingCircle = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [circle, setCircle] = React.useState([]);
-    const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
-    const {id} = useSelector((state: {Auth: any}) => ({
-      id: state.Auth.id,
-    }));
-
+  const {id} = useSelector((state: {Auth: any}) => ({
+    id: state.Auth.id,
+  }));
 
   useFocusEffect(
     React.useCallback(() => {
@@ -59,9 +57,7 @@ const PendingCircle = () => {
     borderRadius: vw(10),
   };
 
-  React.useEffect(() => {
-
-  }, []);
+  React.useEffect(() => {}, []);
   const renderView = (item: any) => {
     return (
       <View style={{paddingHorizontal: vw(3), backgroundColor: '#fbfbfb'}}>
@@ -139,7 +135,7 @@ const PendingCircle = () => {
       {/* {renderView()}
       {renderView()} */}
 
-      <CustomButton
+      {/* <CustomButton
         buttonText={'+ Create A Circle'}
         // handleAction={onPressSave}
         handleAction={() => {
@@ -151,7 +147,7 @@ const PendingCircle = () => {
           styles.saveButtonContainer,
           {backgroundColor: constants.Colors.appButtonColor},
         ]}
-      />
+      /> */}
       {/* {loading && <Loader />} */}
     </View>
   );

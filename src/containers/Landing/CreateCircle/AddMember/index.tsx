@@ -135,7 +135,7 @@ const addMember = (props: Props) => {
           label={'Search '}
           fieldName="accountNumber"
           keyboardType="default"
-          icon={constants.Images.searchIcon}
+          icon={constants.Images.search_icon}
           onChangeText={(type: string, val: string) => {
             setSports(val);
             filterSports(val);

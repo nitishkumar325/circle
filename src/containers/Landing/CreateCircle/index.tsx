@@ -295,16 +295,20 @@ const Home = () => {
       date !== '' &&
       CircleImage !== '' &&
       contact?.length > 0
-    )
+    ) {
       return false;
-    else return true;
+    } else {
+      return true;
+    }
   };
 
   const checkPhonNo = (phoneArray: any) => {
     let phone = `${'+91'}${phoneArray[0].number}`;
-    if (phone === phoneArray[0].number || phone === phoneArray[0].number)
+    if (phone === phoneArray[0].number || phone === phoneArray[0].number) {
       return true;
-    else return false;
+    } else {
+      return false;
+    }
   };
 
   const getData = (contact: any) => {
@@ -523,7 +527,7 @@ const Home = () => {
             }}>
             {CircleImage === '' ? (
               <Image
-                source={constants.Images.up}
+                source={constants.Images.ic_placeholder}
                 style={styles.image}
                 resizeMode="contain"
               />
@@ -804,7 +808,6 @@ const styles = StyleSheet.create({
     marginTop: vh(5),
     height: vh(120),
     width: vh(120),
-    backgroundColor: 'rgb(223,235,255)',
     borderRadius: vw(4),
     marginBottom: vh(40),
     marginRight: vw(10),

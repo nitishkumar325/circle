@@ -16,13 +16,26 @@ import CustomButton from '../../../../component/CustomButton';
 import ImagePicker from '../../../../Utils/ImagePickerFn';
 import Loader from '../../../../component/Loader/Loader';
 import {useDispatch, useSelector} from 'react-redux';
-import {upload, updateValues} from '../../../../modules/Auth';
+import {
+  upload,
+  updateValues,
+  editDetail,
+  setLoginInfo,
+} from '../../../../modules/Auth';
 import Utils from '../../../../Utils';
 
 const EditProfilePicture = () => {
-  const {avatar} = useSelector((state: {Auth: any}) => ({
-    avatar: state.Auth.avatar,
-  }));
+  const {avatar, name, email, phone, authId, id, username} = useSelector(
+    (state: {Auth: any}) => ({
+      avatar: state.Auth.avatar,
+      name: state.Auth.name,
+      email: state.Auth.email,
+      phone: state.Auth.phone,
+      authId: state.Auth.authId,
+      id: state.Auth.id,
+      username: state.Auth.username,
+    }),
+  );
   const navigation = useNavigation();
   const actionSheet: any = React.useRef();
   const [loading, setLoading] = React.useState(false);
@@ -134,8 +147,38 @@ const EditProfilePicture = () => {
     handleOpenImagePicker();
   };
 
+  const ApiCall = () => {
+    let data = {
+      authId,
+      id,
+      name: `${name}`,
+      username: `${username}`,
+      avatar: profileImg,
+    };
+    setLoading(true);
+    dispatch(
+      editDetail(
+        data,
+        (response: any) => {
+          setLoading(false);
+          Utils.CommonFunctions.showSnackbar(response.message, 'black');
+          dispatch(setLoginInfo(data)); // locally update info
+          navigation.goBack();
+        },
+        (error: any) => {
+          setLoading(false);
+          console.log('error', error);
+        },
+      ),
+    );
+    // setTimeout(() => {
+    //   setLoading(false);
+    //   Utils.CommonFunctions.showSnackbar('something went wrong', 'black');
+    // }, 3000);
+  };
+
   const onDonePress = () => {
-    navigation.goBack();
+    ApiCall();
   };
 
   const onRemovePress = () => {

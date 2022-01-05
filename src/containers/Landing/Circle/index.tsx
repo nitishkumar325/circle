@@ -51,7 +51,7 @@ const Home = () => {
           autoCapitalize="sentences"
           container={inputStyles}
           labelStyle={{color: 'white', fontWeight: '600'}}
-          label={'Search Circles'}
+          label={'Search circle'}
           fieldName="accountNumber"
           keyboardType="default"
           icon={constants.Images.searchIcon}
@@ -63,7 +63,7 @@ const Home = () => {
           autoCapitalize="sentences"
           container={inputStyles}
           labelStyle={{color: 'white', fontWeight: '600'}}
-          label={'Search Circles'}
+          label={'Search circle'}
           fieldName="accountNumber"
           keyboardType="default"
           icon={constants.Images.searchIcon}

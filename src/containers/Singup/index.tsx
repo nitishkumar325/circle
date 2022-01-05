@@ -39,10 +39,11 @@ const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [phoneNumberError, setPhoneNumberError] = useState<string>('');
 
-  const [password, setPassword] = useState<string>('');
+  const [password, setPassword] = useState<string>('Password@123');
   const [passwordError, setPasswordError] = useState<string>('');
 
-  const [confirmPassword, setconfirmPassword] = useState<string>('');
+  const [confirmPassword, setconfirmPassword] =
+    useState<string>('Password@123');
   const [confirmPasswordError, setconfirmPasswordError] = useState<string>('');
 
   const [Error, setError] = useState(false);

@@ -112,7 +112,7 @@ export const getCircle = (id: any, callback?: any, Fail?: Function) => {
       (res: any) => {
         console.log('res', res);
         if (res.data.status === 200) {
-          callback(res.data.circles);
+          callback(res.data.circle);
         } else {
           let message = res.data.message;
           utils.CommonFunctions.showSnackbar(message, constants.Colors.black);
